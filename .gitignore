@@ -3,4 +3,7 @@ __pycache__
 .vscode
 .coverage
 htmlcov
+log.html
+report.html
+output.xml
 
