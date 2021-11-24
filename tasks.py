@@ -1,6 +1,6 @@
 from invoke import task
 
 @task
-def testi(ctx):
-    print("Testi")
+def start(ctx):
+    ctx.run("python3 src/index.py")
 
