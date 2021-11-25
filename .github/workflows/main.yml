@@ -30,8 +30,4 @@ jobs:
       - name: Lint
         run: poetry run pylint src
       - name: Run Robot Framework Tests
-        steps:
-        - name: Checkout
-        uses: actions/checkout@v2
-        - name: Robot Framework
-          uses: Chester-CH/ohtu-miniprojekti@v1.0
+        run: bash run_robot_tests.sh
