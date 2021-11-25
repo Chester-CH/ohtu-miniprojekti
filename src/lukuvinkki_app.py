@@ -2,6 +2,7 @@ from console_io import ConsoleIO
 
 
 class LukuvinkkiApp:
+    # pylint: disable=too-few-public-methods
     """ Tiny base for running the program.
     """
 

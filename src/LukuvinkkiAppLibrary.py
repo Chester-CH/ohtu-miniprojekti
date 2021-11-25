@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name
 from mock_io import MockIO
 from index import LukuvinkkiApp
 
