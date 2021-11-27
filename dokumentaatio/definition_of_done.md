@@ -10,12 +10,20 @@ alustava
 
 ## User story -kohtaiset määritelmät
 Käyttäjä voi lisätä tekstimuotoisen lukuvinkin otsikkon
+
 	Ohjelman käynnistyessä avautuu alkuvalikko
+
 	Aloitusnäkymästä pääsee siirtymään vinkinlisäykseen
+
 	Vinkinlisäysnäkymässä saa lisättyä otsikko-kohtaan tekstisyötteen  lukuvinkki
+
 	Vinkinlisäys tuottaa hyväksyvän palautusarvon
 
+
 Käyttäjä voi selata lisäämiään vinkkejä
+
 	Ohjelman käynnistyessä avautuu alkuvalikko
+	
 	Aloitusnäkymästä pääsee siirtymään vinkkien selailuun
+	
 	Selailunäkymässä tulostuu lisätyt vinkit lisäämisjärjestyksessä
