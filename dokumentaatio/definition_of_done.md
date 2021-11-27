@@ -3,9 +3,10 @@ alustava
 
 ## Yleiset määritelmät
 * Testikattavuus vähintään 70 % ja testit menevät läpi
-* Koodi noudattaa Pylint-sääntöjä (arvasana vähintään 9,00)
+* Koodi noudattaa Pylint-sääntöjä (arvosana vähintään 9,00)
 * Koodissa asiat ovat nimetty selkeästi ja englanniksi
-* CI-palvelun (Git Hub Actions) testit menevät läpi, mikä näkyy projektin etusivulla
+* CI-palvelun (Git Hub Actions) testit menevät läpi
+* CI-palvelun tila (eli ovatko testit läpäisty) on näkyvissä repositorion etusivulla
 * Ohjelman käyttäjälle näkyvä toiminnallisuus toimii manuaalisesti testattuna
 
 ## User story -kohtaiset määritelmät
