@@ -1,7 +1,13 @@
 from datetime import datetime
+from sqlite3.dbapi2 import DatabaseError
 from database_connection import database_connection as default_database_connection
 
+# pylint: disable=missing-function-docstring, disable=too-few-public-methods
+
 class TipsRepository:
+    """Class for making SQL quaries dealing with reading tips.
+    """
+
     def __init__(self, database_connection=default_database_connection):
         self._connection = database_connection
 
@@ -13,7 +19,7 @@ class TipsRepository:
             cursor.execute(sql, [title, time])
             self._connection.commit()
             return True
-        except:
+        except DatabaseError:
             return False
 
 tips_repository = TipsRepository()

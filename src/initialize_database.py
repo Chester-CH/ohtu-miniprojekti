@@ -1,4 +1,5 @@
 from database_connection import database_connection as default_database_connection
+# pylint: disable=missing-function-docstring
 
 def create_tables(database_connection=default_database_connection):
     cursor = database_connection.cursor()
