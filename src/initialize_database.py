@@ -6,8 +6,8 @@ def create_tables(database_connection=default_database_connection):
     sql = """CREATE TABLE Tips (
                 id INTEGER PRIMARY KEY,
                 title TEXT,
-                datetime DATETIME
-             );"""
+                datetime DATETIME);
+          """
 
     cursor.execute(sql)
     database_connection.commit()
