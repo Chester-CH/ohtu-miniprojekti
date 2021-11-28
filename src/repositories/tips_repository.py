@@ -7,7 +7,7 @@ class TipsRepository:
 
     def create_tip(self, title):
         try:
-            sql = "INSERT INTO Tips (title, ) VALUES (?, ?);"
+            sql = "INSERT INTO Tips (title, datetime) VALUES (?, ?);"
             time = datetime()
             cursor = self._connection.cursor()
             cursor.execute(sql, [title, time])
