@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlite3.dbapi2 import DatabaseError
 from database_connection import database_connection as default_database_connection
 
-# pylint: disable=missing-function-docstring, disable=too-few-public-methods
+# pylint: disable=missing-function-docstring
 
 class TipsRepository:
     """Class for making SQL quaries dealing with reading tips.
