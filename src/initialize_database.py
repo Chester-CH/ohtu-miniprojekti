@@ -21,9 +21,9 @@ def drop_tables(database_connection=default_database_connection):
     database_connection.commit()
 
 
-def initialize_database():
-    drop_tables()
-    create_tables()
+def initialize_database(database_connection=default_database_connection):
+    drop_tables(database_connection)
+    create_tables(database_connection)
 
 
 if __name__ == "__main__":
