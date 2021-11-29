@@ -28,6 +28,8 @@ class ReadingTipService:
         """
         reading_tip = ReadingTip(title=title)
         if reading_tip:
-            self.tips_repository.create_tip(reading_tip.title)
+            self._tips_repository.create_tip(reading_tip.title)
             return reading_tip
         return None
+
+reading_tip_service = ReadingTipService()
