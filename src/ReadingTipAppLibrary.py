@@ -1,15 +1,15 @@
 # pylint: disable=invalid-name
 from mock_io import MockIO
-from index import LukuvinkkiApp
+from reading_tip_app import ReadingTipApp
 
 
-class LukuvinkkiAppLibrary:
+class ReadingTipAppLibrary:
     """ The robot library for LukuvinkkiApp.
     """
 
     def __init__(self):
         self._io = MockIO()
-        self._app = LukuvinkkiApp(self._io)
+        self._app = ReadingTipApp(self._io)
 
     def output_should_contain(self, message):
         """ Raises an AssertionError when the output didn't contain message.

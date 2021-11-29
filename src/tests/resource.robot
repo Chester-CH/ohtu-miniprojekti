@@ -1,4 +1,4 @@
 *** Settings ***
-Library  ../LukuvinkkiAppLibrary.py
+Library  ../ReadingTipAppLibrary.py
 
 *** Keywords ***

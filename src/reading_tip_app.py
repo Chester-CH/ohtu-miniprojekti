@@ -1,7 +1,7 @@
 from console_io import ConsoleIO
 
 
-class LukuvinkkiApp:
+class ReadingTipApp:
     """ Tiny base for running the program.
     """
 
