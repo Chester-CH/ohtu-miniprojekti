@@ -27,7 +27,6 @@ class ReadingTipService:
         if reading_tip:
             self._tips_repository.create_tip(reading_tip.title)
             return reading_tip
-        return None
 
 
 reading_tip_service = ReadingTipService()
