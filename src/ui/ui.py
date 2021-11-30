@@ -3,8 +3,10 @@ from console_io import default_console
 
 
 class UI:
-    _greet_text = "Hei, tervetuloa Lukuvinkki sovellukseen\n"
-    _menu_text = "\nAnna komento:\n1: lisää lukuvinkki\n0: lopeta"
+    GREET_TEXT = "Hei, tervetuloa Lukuvinkki sovellukseen"
+    MENU_TEXT = "\nAnna komento:\n1: lisää lukuvinkki\n0: lopeta"
+    ADDITION_SUCCESS_TEXT = "Uuden lukuvinkin luonti onnistui."
+    ADDITION_FAIL_TEXT = "Uuden lukuvinkin luonti epäonnistui."
 
     def __init__(self, io=default_console, reading_tip_service=default_reading_tip_service):
         self._io = io
@@ -14,14 +16,15 @@ class UI:
         inputTitle = self._io.read("Kirjoita otsikko: ")
         reading_tip = self._reading_tip_service.create_reading_tip(inputTitle)
         if reading_tip is not None:
-            return True
-        return False
+            self._io.write(self.ADDITION_SUCCESS_TEXT)
+        else:
+            self._io.write(self.ADDITION_FAIL_TEXT)
 
     def start(self):
-        self._io.write(self._greet_text)
+        self._io.write(self.GREET_TEXT)
 
         while True:
-            self._io.write(self._menu_text)
+            self._io.write(self.MENU_TEXT)
 
             inputFeature = self._io.read("Syötä tominta: ")
             if inputFeature == "0":

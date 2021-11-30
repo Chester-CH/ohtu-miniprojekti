@@ -6,7 +6,7 @@ Test Setup  Setup Test Database
 Program Starts And Prints The Greeting And The Menu
     Input Stop Application
     Run Application
-    ${greet} =  Get Greet Message
-    ${menu} =  Get Menu Message
+    ${greet} =  Get Ui Message  GREET_TEXT
+    ${menu} =  Get Ui Message  MENU_TEXT
     Output Should Contain  ${greet}
     Output Should Contain  ${menu}

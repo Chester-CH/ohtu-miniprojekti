@@ -38,8 +38,5 @@ class ReadingTipAppLibrary:
         initialize_database(self.connection)
         self.tips_repository = TipsRepository(self.connection)
 
-    def get_greet_message(self):
-        return self._ui._greet_text
-
-    def get_menu_message(self):
-        return self._ui._menu_text
+    def get_ui_message(self, message_type):
+        return getattr(self._ui, message_type)
