@@ -1,11 +1,12 @@
 from console_io import ConsoleIO
-from ui.ui import UI
+from ui.ui import default_ui
+
 
 class ReadingTipApp:
     """ Tiny base for running the program.
     """
 
-    def __init__(self, ui, io=None):
+    def __init__(self, ui=default_ui, io=None):
         if not io:
             io = ConsoleIO()
         self._io = io
@@ -14,6 +15,4 @@ class ReadingTipApp:
     def run(self):
         """ Runs the program.
         """
-        
-        self._io.write("Hello world!")
         self._ui.start()
