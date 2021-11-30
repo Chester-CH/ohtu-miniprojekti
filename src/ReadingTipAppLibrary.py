@@ -1,4 +1,4 @@
-# pylint: disable=invalid-name
+# pylint: skip-file
 from mock_io import MockIO
 from reading_tip_app import ReadingTipApp
 from initialize_database import initialize_database
