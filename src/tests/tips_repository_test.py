@@ -9,16 +9,15 @@ class TestTipsRepository(unittest.TestCase):
         initialize_database(self.connection)
         self.tips_repository = TipsRepository(self.connection)
 
-    def test_created_tip_gives_boolean_true(self):
+    def test_create_tip_gives_boolean_true(self):
         boolean = self.tips_repository.create_tip("Some_Title")
         self.assertEqual(boolean, True)
     
-    def test_create_tip_gives_the_right_title(self):
+    def test_create_tip_makes_the_right_title(self):
         title = "Some_Title"
         self.tips_repository.create_tip(title)
 
         sql = "SELECT title FROM Tips;"
         cursor = self.connection.cursor()
         answer = cursor.execute(sql).fetchone()
-        print(answer[0])
         self.assertEqual(answer[0], title)
