@@ -6,6 +6,7 @@ from database_connection import create_database_connection, TEST_DATABASE_NAME
 from repositories.tips_repository import TipsRepository
 from services.reading_tip_service import ReadingTipService
 from ui.ui import UI
+import ui.commands as commands
 
 
 class ReadingTipAppLibrary:
@@ -40,8 +41,11 @@ class ReadingTipAppLibrary:
     def input_command(self, command):
         self._io.input_list.append(command)
 
-    def get_ui_message(self, message_type):
-        return getattr(self._ui, message_type)
+    def get_ui_message(self, command_type, message_type):
+        if command_type == "MainMenu":
+            return getattr(self._ui, message_type)
+        else:
+            return getattr(getattr(commands, command_type), message_type)
 
     def program_remembers_tip(self, tip_title):
         sql = "SELECT title FROM Tips;"

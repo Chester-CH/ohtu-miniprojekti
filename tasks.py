@@ -3,12 +3,12 @@ from invoke import task
 
 @task
 def start(ctx):
-    ctx.run("python3 src/index.py")
+    ctx.run("python3 src/index.py", pty=True)
 
 
 @task
 def robot(ctx):
-    ctx.run("robot src/tests")
+    ctx.run("robot src/tests", pty=True)
 
 
 @task

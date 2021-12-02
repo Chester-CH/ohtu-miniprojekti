@@ -8,15 +8,15 @@ User Adds New Tip Successfully
     Input Command  ${tip title}
     Input Stop Application
     Run Application
-    ${success} =  Get Ui Message  ADDITION_SUCCESS_TEXT
+    ${success} =  Get Ui Message  AddNewTip  ADDITION_SUCCESS_TEXT
     Output Should Contain  ${success}
 
 *** Test Cases ***
 Program Starts And Prints The Greeting And The Menu
     Input Stop Application
     Run Application
-    ${greet} =  Get Ui Message  GREET_TEXT
-    ${menu} =  Get Ui Message  MENU_TEXT
+    ${greet} =  Get Ui Message  MainMenu  GREET_TEXT
+    ${menu} =  Get Ui Message  MainMenu  MENU_TEXT
     Output Should Contain  ${greet}
     Output Should Contain  ${menu}
 
@@ -25,7 +25,7 @@ User Can Go To Add New Tips Menu
     Input Command  testi
     Input Stop Application
     Run Application
-    ${tips menu} =  Get Ui Message  ADD_NEW_TIP_TEXT
+    ${tips menu} =  Get Ui Message  AddNewTip  ADD_NEW_TIP_TEXT
     Output Should Contain  ${tips menu}
 
 User Can Add New Tip From Tips Menu And Gets Success Confirmation
