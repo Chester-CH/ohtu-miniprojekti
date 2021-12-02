@@ -23,9 +23,11 @@ class ReadingTipService:
         Returns: return reading tip
 
         """
+        if not title:
+            return None
+
         reading_tip = ReadingTip(title=title)
-        if reading_tip:
-            self._tips_repository.create_tip(reading_tip.title)
+        if self._tips_repository.create_tip(reading_tip.title):
             return reading_tip
         return None
 
