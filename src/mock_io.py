@@ -13,6 +13,7 @@ class MockIO:
         """
         # pylint: disable=unused-argument
         try:
+            self.write(input_prompt)
             return self.input_list.pop(0)
         except IndexError:
             return ""

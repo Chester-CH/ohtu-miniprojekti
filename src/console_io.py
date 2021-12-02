@@ -13,3 +13,6 @@ class ConsoleIO:
         """ Prints the given message to the console.
         """
         print(message)
+
+
+default_console = ConsoleIO()
