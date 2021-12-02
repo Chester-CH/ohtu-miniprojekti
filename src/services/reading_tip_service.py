@@ -31,5 +31,11 @@ class ReadingTipService:
             return reading_tip
         return None
 
+    def get_all_tips(self):
+        """Show all the existing tips by listing
+        Args: String
+        Returns: return list of tips
+        """
+        return self._tips_repository.get_tips()
 
 reading_tip_service = ReadingTipService()
