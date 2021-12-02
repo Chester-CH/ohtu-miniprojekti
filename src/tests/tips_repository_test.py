@@ -22,8 +22,8 @@ class TestTipsRepository(unittest.TestCase):
         answer = cursor.execute(sql).fetchone()
         self.assertEqual(answer[0], title)
 
-    def test_get_tips_gives_an_object_with_right_title(self):
-        title = "Crash"
-        self.tips_repository.create_tip(title)
+    def test_get_tips_gives_an_object_with_the_right_title(self):
+        input_title = "Crash"
+        self.tips_repository.create_tip(input_title)
         tip_list = self.tips_repository.get_tips()
-        self.assertEqual(tip_list[0].title, title)
+        self.assertEqual(tip_list[0].title, input_title)
