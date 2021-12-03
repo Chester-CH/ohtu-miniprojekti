@@ -16,13 +16,13 @@ class UI:
     def start(self):
         self._io.write(self.GREET_TEXT)
 
-        while True:
-            self._io.write(self.MENU_TEXT)
-            input_string = self._io.read(self.MENU_INPUT_TEXT)
-            try:
+        try:
+            while True:
+                self._io.write(self.MENU_TEXT)
+                input_string = self._io.read(self.MENU_INPUT_TEXT)
                 self._command_factory.get_command(input_string).execute()
-            except Exception:
-                break
+        except Exception:
+            pass
 
 
 default_ui = UI()
