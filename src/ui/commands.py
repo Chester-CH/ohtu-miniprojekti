@@ -49,19 +49,35 @@ class AddNewTip(Command):
 class BrowseTips(Command):
     """ Command for browsing the created tips list.
     """
-    GREET_TEXT = "Selaa lukuvinkkejä:"
+    GREET_TEXT = "\nSelaa lukuvinkkejä:"
     COMMAND_HELP_TEXT = "Komennot: 0: lopeta, 1: Seuraava sivu"
+    QUERY_FOR_MORE_TEXT = "Tulosta lisää lukuvinkkejä? (k/e): "
+    END_BROWSING_TEXT = "\nLukuvinkkilistan selaaminen lopetettu."
     TIPS_PER_PAGE = 10
 
     class MenuCommands:
         """ A short class for storing the menu commands.
         """
-        STOP = "0"
-        NEXT_PAGE = "1"
+        STOP = "e"
+        NEXT_PAGE = "k"
 
     def execute(self):
+        list_of_tips = self._reading_tip_service.get_all_tips()
         self._io.write(self.GREET_TEXT)
-        # NOT IMPLEMENTED
+
+        for tip_number, tip in enumerate(list_of_tips):
+            user_tip_number = tip_number + 1
+            self._io.write(f"{user_tip_number}: {tip.title}")
+
+            if tip_number == len(list_of_tips) - 1:
+                break
+
+            if (tip_number + 1) % self.TIPS_PER_PAGE == 0:
+                user_input = self._io.read(self.QUERY_FOR_MORE_TEXT)
+                if user_input == self.MenuCommands.STOP:
+                    break
+
+        self._io.write(self.END_BROWSING_TEXT)
 
 
 class UnknownCommand(Command):
