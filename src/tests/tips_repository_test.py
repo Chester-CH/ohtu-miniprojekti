@@ -27,3 +27,31 @@ class TestTipsRepository(unittest.TestCase):
         self.tips_repository.create_tip(input_title)
         tip_list = self.tips_repository.get_tips()
         self.assertEqual(tip_list[0].title, input_title)
+
+    def test_remove_tip_change_tips_visible_value_from_true_to_false(self):
+        input_title = "Pipsa Possu ja yksisarvinen"
+        self.tips_repository.create_tip(input_title)
+
+        sql = "SELECT id, visible FROM Tips WHERE title=?;"
+        cursor = self.connection.cursor()
+        answer = cursor.execute(sql, [input_title]).fetchone()
+        print(answer)
+        print(answer[0], answer[1])
+        self.assertEqual(answer[1], True)
+
+        self.tips_repository.remove_tip(answer[0])
+        cursor = self.connection.cursor()
+        answer2 = cursor.execute(sql, [input_title]).fetchone()
+        self.assertEqual(answer2[1], False)
+
+    def test_get_tips_doesnt_give_removed_tip(self):
+        input_title = "Bret Easton Ellis: Glamorama"
+        self.tips_repository.create_tip(input_title)
+
+        sql = "SELECT id FROM Tips WHERE title=?;"
+        cursor = self.connection.cursor()
+        tip_id = cursor.execute(sql, [input_title]).fetchone()
+
+        self.tips_repository.remove_tip(tip_id[0])
+        tips = self.tips_repository.get_tips()
+        self.assertEqual(len(tips), 0)
