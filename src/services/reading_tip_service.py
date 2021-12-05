@@ -31,6 +31,20 @@ class ReadingTipService:
             return reading_tip
         return None
 
+    def remvoe_reading_tip(self, id):
+        """Remove the selected reading tip
+
+        Args:
+            int: which is the id of the tip
+        Return true/false
+        """
+        if not id:
+            return False
+        if self._tips_repository.remove_tip(id):
+            return True
+        return False
+        
+
     def get_all_tips(self):
         """Show all the existing tips by listing
         Args: String
