@@ -10,18 +10,21 @@ class ReadingTip:
         Args:
             title: A string, which is the title of the reading tip
         """
+        self._tip_id = tip_id
         self._title = title
+
+    @property
+    def tip_id(self):
+        return self._tip_id
+
+    @tip_id.setter
+    def tip_id(self, tip_id):
         self._tip_id = tip_id
 
     @property
     def title(self):
         return self._title
 
-    @property
-    def tip_id(self):
-        return self._tip_id
-
     @title.setter
-    def title(self, title, tip_id):
+    def title(self, title):
         self._title = title
-        self._tip_id = tip_id
