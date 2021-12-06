@@ -1,6 +1,6 @@
 from services.reading_tip_service import reading_tip_service as default_reading_tip_service
 from console_io import default_console
-from ui.commands import CommandFactory
+from ui.commands import CommandFactory, QuitSignal
 
 
 class UI:
@@ -21,7 +21,7 @@ class UI:
                 self._io.write(self.MENU_TEXT)
                 input_string = self._io.read(self.MENU_INPUT_TEXT)
                 self._command_factory.get_command(input_string).execute()
-        except Exception:
+        except QuitSignal:
             pass
 
 

@@ -13,7 +13,10 @@ class Command():
     def __init__(self, io, reading_tip_service):
         self._io = io
         self._reading_tip_service = reading_tip_service
-        
+
+
+class QuitSignal(Exception):
+    pass
 
 
 class QuitProgram(Command):
@@ -28,7 +31,7 @@ class QuitProgram(Command):
             Exception: used to signal to the main loop that the user wishes to quit.
         """
         self._io.write(self.GOODBYE_TEXT)
-        raise Exception("Quit-signal")
+        raise QuitSignal
 
 
 class AddNewTip(Command):
@@ -58,7 +61,7 @@ class BrowseTips(Command):
     REMOVAL_SUCCESS_TEXT = "Vinkin poisto onnistui."
     REMOVAL_FAIL_TEXT = "Vinkin poisto epäonnistui."
     REMOVAL_GREET = "Poistetaanko vinkkejä? (k/e): "
-    CHOOSE_TIP_FOR_REMOVAL = "Syötä vinkin numero: "  
+    CHOOSE_TIP_FOR_REMOVAL = "Syötä vinkin numero: "
 
     class MenuCommands:
         """ A short class for storing the menu commands.
@@ -80,7 +83,7 @@ class BrowseTips(Command):
             if (tip_number + 1) % self.TIPS_PER_PAGE == 0:
                 user_input = self._io.read(self.QUERY_FOR_MORE_TEXT)
                 if user_input == self.MenuCommands.STOP:
-                    break      
+                    break
 
         if not list_of_tips:
             return
@@ -88,12 +91,12 @@ class BrowseTips(Command):
             removal_input = self._io.read(self.REMOVAL_GREET)
             if removal_input == self.MenuCommands.STOP:
                 return
-            removal_number = int(self._io.read(self.CHOOSE_TIP_FOR_REMOVAL))     
-    
+            removal_number = int(self._io.read(self.CHOOSE_TIP_FOR_REMOVAL))
+
             if self._reading_tip_service.remove_reading_tip(list_of_tips[removal_number-1]):
-                self._io.write(self.REMOVAL_SUCCESS_TEXT)            
+                self._io.write(self.REMOVAL_SUCCESS_TEXT)
             else:
-                self._io.write(self.REMOVAL_FAIL_TEXT)          
+                self._io.write(self.REMOVAL_FAIL_TEXT)
 
 
 class UnknownCommand(Command):
