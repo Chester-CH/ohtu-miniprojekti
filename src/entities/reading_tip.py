@@ -5,7 +5,7 @@ class ReadingTip:
         title: String, which is the name of the reading tips
     """
 
-    def __init__(self, title, tip_id):
+    def __init__(self, tip_id, title):
         """Class constructor, which creates a new reading tip.
         Args:
             title: A string, which is the title of the reading tip

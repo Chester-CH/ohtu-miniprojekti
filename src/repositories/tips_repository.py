@@ -6,7 +6,7 @@ from database_connection import database_connection as default_database_connecti
 # pylint: disable=missing-function-docstring
 
 def give_tip_object(row):
-    return ReadingTip(row["title"])
+    return ReadingTip(row["id"], row["title"])
 
 class TipsRepository:
     """Class for making SQL quaries dealing with reading tips.

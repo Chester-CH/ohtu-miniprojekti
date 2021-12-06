@@ -26,21 +26,21 @@ class ReadingTipService:
         if not title:
             return None
 
-        reading_tip = ReadingTip(title=title)
-        if self._tips_repository.create_tip(reading_tip.title):
-            return reading_tip
+        if self._tips_repository.create_tip(title):
+            return True
         return None
 
-    def remvoe_reading_tip(self, id):
+    def remove_reading_tip(self, tip):
         """Remove the selected reading tip
 
         Args:
             int: which is the id of the tip
         Return true/false
         """
-        if not id:
+        if not tip:
             return False
-        if self._tips_repository.remove_tip(id):
+
+        if self._tips_repository.remove_tip(tip.tip_id):
             return True
         return False
         
