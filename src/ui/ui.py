@@ -1,6 +1,6 @@
 from services.reading_tip_service import reading_tip_service as default_reading_tip_service
 from console_io import default_console
-from ui.commands import CommandFactory, QuitSignal
+from ui.commands import QuitSignal, create_main_menu_command_factory
 
 
 class UI:
@@ -11,7 +11,8 @@ class UI:
     def __init__(self, io=default_console, reading_tip_service=default_reading_tip_service):
         self._io = io
         self._reading_tip_service = reading_tip_service
-        self._command_factory = CommandFactory(io, reading_tip_service)
+        self._command_factory = create_main_menu_command_factory(
+            io, reading_tip_service)
 
     def start(self):
         self._io.write(self.GREET_TEXT)
