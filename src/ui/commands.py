@@ -13,6 +13,7 @@ class Command():
     def __init__(self, io, reading_tip_service):
         self._io = io
         self._reading_tip_service = reading_tip_service
+        
 
 
 class QuitProgram(Command):
@@ -54,6 +55,10 @@ class BrowseTips(Command):
     QUERY_FOR_MORE_TEXT = "Tulosta lisää lukuvinkkejä? (k/e): "
     END_BROWSING_TEXT = "\nLukuvinkkilistan selaaminen lopetettu."
     TIPS_PER_PAGE = 10
+    REMOVAL_SUCCESS_TEXT = "Vinkin poisto onnistui."
+    REMOVAL_FAIL_TEXT = "Vinkin poisto epäonnistui."
+    REMOVAL_GREET = "Poistetaanko vinkkejä? (k/e): "
+    CHOOSE_TIP_FOR_REMOVAL = "Syötä vinkin numero: "  
 
     class MenuCommands:
         """ A short class for storing the menu commands.
@@ -67,7 +72,7 @@ class BrowseTips(Command):
 
         for tip_number, tip in enumerate(list_of_tips):
             user_tip_number = tip_number + 1
-            self._io.write(f"{user_tip_number}: {tip.title}")
+            self._io.write(f"{user_tip_number}: {tip.title}: {tip.tip_id}")
 
             if tip_number == len(list_of_tips) - 1:
                 break
@@ -77,7 +82,25 @@ class BrowseTips(Command):
                 if user_input == self.MenuCommands.STOP:
                     break
 
-        self._io.write(self.END_BROWSING_TEXT)
+        
+
+        removal_input = self._io.read(self.REMOVAL_GREET)
+        if removal_input == self.MenuCommands.STOP:
+            return
+        removal_number = int(self._io.read(self.CHOOSE_TIP_FOR_REMOVAL))
+        
+        """
+        for i,o in enumerate (list_of_tips):
+            print(i)
+            print(o)
+        print(list_of_tips[removal_number-1].tip_id)        
+        print(self._reading_tip_service.remove_reading_tip(self, list_of_tips[removal_number-1]))
+        """
+
+        if self._reading_tip_service.remove_reading_tip(self, list_of_tips[removal_number-1]):
+            self._io.write(self.REMOVAL_SUCCESS_TEXT)            
+        else:
+            self._io.write(self.REMOVAL_FAIL_TEXT)          
 
 
 class UnknownCommand(Command):
@@ -89,7 +112,7 @@ class UnknownCommand(Command):
         self._io.write(self.UNKNOWN_COMMAND_TEXT)
 
 
-class CommandFactory():
+class CommandFactory:
     """ A handling class for all the user commands recognized by the program. 
     """
 
