@@ -72,7 +72,7 @@ class BrowseTips(Command):
 
         for tip_number, tip in enumerate(list_of_tips):
             user_tip_number = tip_number + 1
-            self._io.write(f"{user_tip_number}: {tip.title}: {tip.tip_id}")
+            self._io.write(f"{user_tip_number}: {tip.title}")
 
             if tip_number == len(list_of_tips) - 1:
                 break
@@ -80,27 +80,20 @@ class BrowseTips(Command):
             if (tip_number + 1) % self.TIPS_PER_PAGE == 0:
                 user_input = self._io.read(self.QUERY_FOR_MORE_TEXT)
                 if user_input == self.MenuCommands.STOP:
-                    break
+                    break      
 
-        
-
-        removal_input = self._io.read(self.REMOVAL_GREET)
-        if removal_input == self.MenuCommands.STOP:
+        if not list_of_tips:
             return
-        removal_number = int(self._io.read(self.CHOOSE_TIP_FOR_REMOVAL))
-        
-        """
-        for i,o in enumerate (list_of_tips):
-            print(i)
-            print(o)
-        print(list_of_tips[removal_number-1].tip_id)        
-        print(self._reading_tip_service.remove_reading_tip(self, list_of_tips[removal_number-1]))
-        """
-
-        if self._reading_tip_service.remove_reading_tip(self, list_of_tips[removal_number-1]):
-            self._io.write(self.REMOVAL_SUCCESS_TEXT)            
         else:
-            self._io.write(self.REMOVAL_FAIL_TEXT)          
+            removal_input = self._io.read(self.REMOVAL_GREET)
+            if removal_input == self.MenuCommands.STOP:
+                return
+            removal_number = int(self._io.read(self.CHOOSE_TIP_FOR_REMOVAL))     
+    
+            if self._reading_tip_service.remove_reading_tip(list_of_tips[removal_number-1]):
+                self._io.write(self.REMOVAL_SUCCESS_TEXT)            
+            else:
+                self._io.write(self.REMOVAL_FAIL_TEXT)          
 
 
 class UnknownCommand(Command):
