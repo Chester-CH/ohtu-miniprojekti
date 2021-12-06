@@ -57,3 +57,12 @@ class ReadingTipAppLibrary:
         if answer[0] != tip_title:
             raise AssertionError(
                 f"The tip with title {tip_title} was not saved.")
+
+    def program_doesnt_show_tip(self, tip_title):
+        sql = "SELECT visible FROM Tips WHERE title=:title;"
+        cursor = self.connection.cursor()
+        answer = cursor.execute(sql, {"title":tip_title}).fetchone()
+        if answer[0]:
+            raise AssertionError(
+                f"The tip titled {tip_title} is visible."
+            )
