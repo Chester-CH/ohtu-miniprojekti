@@ -26,9 +26,12 @@ class ReadingTipAppLibrary:
     def output_should_contain(self, message):
         """ Raises an AssertionError when the output didn't contain message.
         """
-        if not message in self._io.output_list:
-            raise AssertionError(
-                f"Missing output \"{message}\" in {str(self._io.output_list)}")
+        for output_message in self._io.output_list:
+            if message in output_message:
+                return
+
+        raise AssertionError(
+            f"Missing output \"{message}\" in {str(self._io.output_list)}")
 
     def run_application(self):
         """ Runs the application for robot tests.
