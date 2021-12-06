@@ -14,7 +14,7 @@ Käyttäjä voi lisätä tekstimuotoisen lukuvinkin otsikkon
 
 	Ohjelman käynnistyessä avautuu alkuvalikko
 
-	Aloitusnäkymästä pääsee siirtymään vinkinlisäykseen
+	Aloitusnäkymästä pääsee siirtymään vinkinlisäykseen  Syöte 1
 
 	Vinkinlisäysnäkymässä saa lisättyä otsikko-kohtaan tekstisyötteen  lukuvinkki
 
@@ -25,6 +25,24 @@ Käyttäjä voi selata lisäämiään vinkkejä
 
 	Ohjelman käynnistyessä avautuu alkuvalikko
 	
-	Aloitusnäkymästä pääsee siirtymään vinkkien selailuun
+	Aloitusnäkymästä pääsee siirtymään vinkkien selailuun  Syöte 2
 	
 	Selailunäkymässä tulostuu lisätyt vinkit lisäämisjärjestyksessä
+
+
+Käyttäjä voi poistaa vinkin
+	
+	Ohjelman käynnistyessä avautuu alkuvalikko
+	
+	Aloitusnäkymästä pääsee siirtymään vinkinlisäykseen  Syöte 1
+
+	Vinkinlisäysnäkymässä saa lisättyä otsikko-kohtaan tekstisyötteen  lukuvinkki
+	
+	Aloitusnäkymästä pääsee siirtymään vinkkien selailuun  Syöte 2
+	
+	Selailunäkymästä pääsee siirtymään vinkkien poistamiseen  Syöte p
+	
+	Vinkin voi poistaa antamalla vinkin id-numeron  Syöte 1
+	
+	Vinkkiä ei tulostu selaamisnäkymässä
+	
