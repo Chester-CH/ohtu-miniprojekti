@@ -33,7 +33,7 @@ kautta. Tietokannan käsittelyä tehdään vain repositories-luokkien sisällä.
 
 ## Product Backlog ja Sprint Backlogit
 
-![Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/zhishang_ad_helsinki_fi/ESzC-Jm3OalOiB9j0D8Jk3gBnYgjiXha1GqmPX1QvpkNvQ?e=tM95Tj)
+Backlog: https://helsinkifi-my.sharepoint.com/:x:/g/personal/zhishang_ad_helsinki_fi/ESzC-Jm3OalOiB9j0D8Jk3gBnYgjiXha1GqmPX1QvpkNvQ?e=tM95Tj
 
 ## Julkaisut
 ![1st release](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v1.0.0)
