@@ -7,7 +7,7 @@ Removing Tip Gives Right Message
     Browse Tips From Main Menu
     Erase First Tip And Quit
     Input Stop And Run Application
-    ${REMOVE TEXT} =  Get Ui Message  RemoveTips  REMOVAL_SUCCESS_TEXT
+    ${REMOVE TEXT} =  Get Ui Message  RemoveTip  REMOVAL_SUCCESS_TEXT
     Output Should Contain  ${REMOVE TEXT}
 
 Tip Is Not Visible After Removing

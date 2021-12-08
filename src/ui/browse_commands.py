@@ -1,11 +1,11 @@
-from ui.base_command import Command
+from ui.base_command import Command, QuitSignal
 from ui.command_factory import CommandFactory
 
 
 class BrowseMenuCommands:
     YES = "k"
     NO = "e"
-    BROWSE_MORE = "t"
+    SHOW_MORE_TIPS = "t"
     STOP_BROWSING = "l"
     REMOVE_TIP = "p"
 
@@ -18,30 +18,38 @@ class BrowseTips(Command):
     QUERY_FOR_MORE_TEXT = "(t)ulosta lisää vinkkejä, (p)oista vinkki tai (l)opeta selaus: "
     QUERY_AT_END_TEXT = "(p)oista vinkki tai (l)opeta selaus: "
     END_BROWSING_TEXT = "\nLukuvinkkilistan selaaminen lopetettu."
+    NO_TIPS_FOUND_TEXT = "Lukuvinkkejä ei löytynyt."
     TIPS_PER_PAGE = 10
 
     def _init_commands(self, tip_list):
         menu_commands = {
-            BrowseMenuCommands.REMOVE_TIP: RemoveTips(
-                self._io, self._reading_tip_service, tip_list)
+            BrowseMenuCommands.REMOVE_TIP:
+            RemoveTip(self._io, self._reading_tip_service, tip_list),
+            BrowseMenuCommands.STOP_BROWSING:
+            StopBrowsing(self._io, self._reading_tip_service),
+            BrowseMenuCommands.SHOW_MORE_TIPS:
+            ShowMoreTips(self._io, self._reading_tip_service),
         }
         self._command_factory = CommandFactory(
             self._io, self._reading_tip_service, menu_commands)
 
-    def _handle_input(self, query_text):
-        while True:
-            user_input = self._io.read(query_text).lower()
-
-            if user_input == BrowseMenuCommands.STOP_BROWSING:
-                return BrowseMenuCommands.STOP_BROWSING
-            if user_input == BrowseMenuCommands.BROWSE_MORE:
-                return BrowseMenuCommands.BROWSE_MORE
-            self._command_factory.get_command(user_input).execute()
+    def _handle_input(self, query_text, tip_list):
+        try:
+            while not all(tip is None for tip in tip_list):
+                user_input = self._io.read(query_text).lower()
+                self._command_factory.get_command(user_input).execute()
+            return BrowseMenuCommands.STOP_BROWSING
+        except QuitSignal as quit_signal:
+            return str(quit_signal)
 
     def execute(self):
         tip_list = self._reading_tip_service.get_all_tips()
         self._init_commands(tip_list)
         self._io.write(self.GREET_TEXT)
+
+        if not tip_list:
+            self._io.write(self.NO_TIPS_FOUND_TEXT)
+            return
 
         tip_number = 0
         while tip_number < len(tip_list):
@@ -53,15 +61,19 @@ class BrowseTips(Command):
                 break
 
             if (tip_number + 1) % self.TIPS_PER_PAGE == 0:
-                if self._handle_input(self.QUERY_FOR_MORE_TEXT) == BrowseMenuCommands.STOP_BROWSING:
+                if (self._handle_input(self.QUERY_FOR_MORE_TEXT, tip_list)
+                        == BrowseMenuCommands.STOP_BROWSING):
                     return
 
             tip_number += 1
 
-        self._handle_input(self.QUERY_AT_END_TEXT)
+        if self._reading_tip_service.get_all_tips():
+            self._handle_input(self.QUERY_AT_END_TEXT, tip_list)
 
 
-class RemoveTips(Command):
+class RemoveTip(Command):
+    """ A command for removing a single tip from a tip list. """
+
     REMOVAL_SUCCESS_TEXT = "Vinkin poisto onnistui."
     REMOVAL_FAIL_TEXT = "Vinkin poisto epäonnistui."
     CHOOSE_TIP_FOR_REMOVAL = "Syötä vinkin numero: "
@@ -86,5 +98,16 @@ class RemoveTips(Command):
 
         if self._reading_tip_service.remove_reading_tip(selected_tip):
             self._io.write(self.REMOVAL_SUCCESS_TEXT)
+            self._tip_list[removal_number - 1] = None
         else:
             self._io.write(self.REMOVAL_FAIL_TEXT)
+
+
+class ShowMoreTips(Command):
+    def execute(self):
+        raise QuitSignal(BrowseMenuCommands.SHOW_MORE_TIPS)
+
+
+class StopBrowsing(Command):
+    def execute(self):
+        raise QuitSignal(BrowseMenuCommands.STOP_BROWSING)

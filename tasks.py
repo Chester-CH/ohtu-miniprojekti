@@ -12,6 +12,11 @@ def robot(ctx):
 
 
 @task
+def tests(ctx):
+    ctx.run("pytest src", pty=True)
+
+
+@task
 def build(ctx):
     ctx.run("python3 src/initialize_database.py")
 

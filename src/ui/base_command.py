@@ -1,3 +1,6 @@
+class QuitSignal(Exception):
+    pass
+
 class Command():
     """ A generic base class for handling user inputs.
     """

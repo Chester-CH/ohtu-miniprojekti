@@ -1,5 +1,5 @@
-from ui.base_command import Command
-from ui.browse_commands import BrowseTips, RemoveTips, BrowseMenuCommands
+from ui.base_command import Command, QuitSignal
+from ui.browse_commands import BrowseTips, RemoveTip, BrowseMenuCommands
 from ui.command_factory import CommandFactory, UnknownCommand
 
 
@@ -9,10 +9,6 @@ class MainMenuCommands():
     QUIT_PROGRAM = "0"
     ADD_NEW_TIP = "1"
     BROWSE_TIPS = "2"
-
-
-class QuitSignal(Exception):
-    pass
 
 
 class QuitProgram(Command):
