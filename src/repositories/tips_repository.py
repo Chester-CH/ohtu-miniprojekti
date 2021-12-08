@@ -5,8 +5,10 @@ from database_connection import database_connection as default_database_connecti
 
 # pylint: disable=missing-function-docstring
 
+
 def give_tip_object(row):
     return ReadingTip(row["id"], row["title"])
+
 
 class TipsRepository:
     """Class for making SQL quaries dealing with reading tips.
@@ -36,12 +38,15 @@ class TipsRepository:
 
     def remove_tip(self, tip_id):
         try:
-            sql = "UPDATE Tips SET visible=FALSE WHERE id=?;"
+            sql = "UPDATE Tips SET visible=FALSE WHERE id=? AND visible=TRUE;"
             cursor = self._connection.cursor()
             cursor.execute(sql, [tip_id])
             self._connection.commit()
-            return True
+            if cursor.rowcount == 1:
+                return True
+            return False
         except DatabaseError:
             return False
+
 
 tips_repository = TipsRepository()

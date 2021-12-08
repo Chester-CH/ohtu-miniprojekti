@@ -84,8 +84,7 @@ class RemoveTips(Command):
 
         selected_tip = self._tip_list[removal_number - 1]
 
-        if selected_tip and self._reading_tip_service.remove_reading_tip(selected_tip):
+        if self._reading_tip_service.remove_reading_tip(selected_tip):
             self._io.write(self.REMOVAL_SUCCESS_TEXT)
-            self._tip_list[removal_number-1] = None
         else:
             self._io.write(self.REMOVAL_FAIL_TEXT)
