@@ -6,6 +6,8 @@ TEST_DATABASE_NAME = "test_database.db"
 
 
 def create_database_connection(database_name=DATABASE_NAME):
+    """Returns an sqlite3 database connection.
+    """
     dirname = os.path.dirname(__file__)
     db_connection = sqlite3.connect(
         os.path.join(dirname, "..", "data", database_name))

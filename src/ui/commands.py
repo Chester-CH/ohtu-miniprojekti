@@ -1,6 +1,8 @@
 from ui.base_command import Command, QuitSignal
 from ui.browse_commands import BrowseTips, RemoveTip, BrowseMenuCommands
 from ui.command_factory import CommandFactory, UnknownCommand
+from services.reading_tip_factory import ReadingTipFactory
+from entities.tip_types import TipTypes
 
 
 class MainMenuCommands():
@@ -35,11 +37,13 @@ class AddNewTip(Command):
 
     def execute(self):
         input_title = self._io.read(self.ADD_NEW_TIP_TEXT)
-        reading_tip = self._reading_tip_service.create_reading_tip(input_title)
-        if reading_tip is not None:
-            self._io.write(self.ADDITION_SUCCESS_TEXT)
-        else:
-            self._io.write(self.ADDITION_FAIL_TEXT)
+        reading_tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        reading_tip.title = input_title
+        if reading_tip.title:
+            if self._reading_tip_service.store_reading_tip(reading_tip):
+                self._io.write(self.ADDITION_SUCCESS_TEXT)
+                return
+        self._io.write(self.ADDITION_FAIL_TEXT)
 
 
 def create_main_menu_command_factory(io, reading_tip_service):

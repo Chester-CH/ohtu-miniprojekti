@@ -6,6 +6,7 @@ def create_tables(database_connection=default_database_connection):
     cursor = database_connection.cursor()
     sql = """CREATE TABLE Tips (
                 id INTEGER PRIMARY KEY,
+                type TEXT,
                 title TEXT,
                 datetime DATETIME,
                 visible BOOLEAN

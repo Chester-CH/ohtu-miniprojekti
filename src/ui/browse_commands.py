@@ -1,6 +1,7 @@
 from ui.base_command import Command, QuitSignal
 from ui.command_factory import CommandFactory
-
+from entities.tip_types import TipTypes
+from ui.tip_printer import TipPrinter
 
 class BrowseMenuCommands:
     YES = "k"
@@ -55,7 +56,8 @@ class BrowseTips(Command):
         while tip_number < len(tip_list):
             user_tip_number = tip_number + 1
             tip = tip_list[tip_number]
-            self._io.write(f"{user_tip_number}: {tip.title}")
+            self._io.write(
+                f"{user_tip_number}: {TipPrinter.get_description(tip)}")
 
             if tip_number == len(tip_list) - 1:
                 break

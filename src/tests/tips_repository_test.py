@@ -1,7 +1,10 @@
 from database_connection import create_database_connection, TEST_DATABASE_NAME
 from initialize_database import initialize_database
 from repositories.tips_repository import TipsRepository
+from services.reading_tip_factory import ReadingTipFactory
+from entities.tip_types import TipTypes
 import unittest
+
 
 class TestTipsRepository(unittest.TestCase):
     def setUp(self):
@@ -9,28 +12,35 @@ class TestTipsRepository(unittest.TestCase):
         initialize_database(self.connection)
         self.tips_repository = TipsRepository(self.connection)
 
-    def test_create_tip_gives_boolean_true(self):
-        boolean = self.tips_repository.create_tip("Some_Title")
-        self.assertEqual(boolean, True)
-    
-    def test_create_tip_makes_the_right_title(self):
-        title = "Some_Title"
-        self.tips_repository.create_tip(title)
+    def test_store_reading_tip_gives_boolean_true(self):
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip.title = "Snowcrash"
+        boolean = self.tips_repository.store_reading_tip(tip)
+        self.assertTrue(boolean)
+
+    def test_store_reading_tip_stores_the_right_title(self):
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip.title = "Snowcrash"
+        self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT title FROM Tips;"
         cursor = self.connection.cursor()
         answer = cursor.execute(sql).fetchone()
-        self.assertEqual(answer[0], title)
+        self.assertEqual(answer[0], tip.title)
 
     def test_get_tips_gives_an_object_with_the_right_title(self):
-        input_title = "Crash"
-        self.tips_repository.create_tip(input_title)
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip.title = "Snowcrash"
+        self.tips_repository.store_reading_tip(tip)
+
         tip_list = self.tips_repository.get_tips()
-        self.assertEqual(tip_list[0].title, input_title)
+        self.assertEqual(tip_list[0].title, tip.title)
 
     def test_remove_tip_changes_tips_visible_value_from_true_to_false(self):
         input_title = "Pipsa Possu ja yksisarvinen"
-        self.tips_repository.create_tip(input_title)
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip.title = input_title
+        self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT id, visible FROM Tips WHERE title=?;"
         cursor = self.connection.cursor()
@@ -44,7 +54,9 @@ class TestTipsRepository(unittest.TestCase):
 
     def test_get_tips_doesnt_give_removed_tip(self):
         input_title = "Bret Easton Ellis: Glamorama"
-        self.tips_repository.create_tip(input_title)
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip.title = input_title
+        self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT id FROM Tips WHERE title=?;"
         cursor = self.connection.cursor()
