@@ -37,3 +37,4 @@ Backlog: https://helsinkifi-my.sharepoint.com/:x:/g/personal/zhishang_ad_helsink
 
 ## Julkaisut
 ![1st release](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v1.0.0)
+
