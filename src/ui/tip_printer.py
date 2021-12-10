@@ -18,6 +18,8 @@ def _get_podcast_description(podcast_tip):
 
 
 class TipPrinter:
+    """ For generating string representations of tip objects in Finnish. """
+
     TIP_TYPE_PRINTERS = {
         TipTypes.BOOK: _get_book_description,
         TipTypes.BLOGPOST: _get_blogpost_description,
@@ -33,6 +35,7 @@ class TipPrinter:
 
     @staticmethod
     def get_description(tip):
+        """ Returns a string description of the contents of this tip. """
         description = f"{tip.title}, {TipPrinter.TIP_TYPE_IN_FINNISH[tip.tip_type]}" + \
             TipPrinter.TIP_TYPE_PRINTERS[tip.tip_type](tip)
         return description

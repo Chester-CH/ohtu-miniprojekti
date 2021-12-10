@@ -1,9 +1,9 @@
+import unittest
 from database_connection import create_database_connection, TEST_DATABASE_NAME
 from initialize_database import initialize_database
 from repositories.tips_repository import TipsRepository
 from services.reading_tip_factory import ReadingTipFactory
 from entities.tip_types import TipTypes
-import unittest
 
 
 class TestTipsRepository(unittest.TestCase):
@@ -27,6 +27,17 @@ class TestTipsRepository(unittest.TestCase):
         cursor = self.connection.cursor()
         answer = cursor.execute(sql).fetchone()
         self.assertEqual(answer[0], tip.title)
+
+    def test_store_reading_tips_stores_the_right_type(self):
+        tip_type = TipTypes.BOOK
+        tip = ReadingTipFactory.get_new_reading_tip(tip_type)
+        tip.title = "Snowcrash"
+        self.tips_repository.store_reading_tip(tip)
+
+        sql = "SELECT type FROM Tips;"
+        cursor = self.connection.cursor()
+        answer = cursor.execute(sql).fetchone()
+        self.assertEqual(answer[0], tip_type)
 
     def test_get_tips_gives_an_object_with_the_right_title(self):
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)

@@ -7,8 +7,10 @@ from services.reading_tip_factory import ReadingTipFactory
 
 def give_tip_object(row):
     """A helper function for creating tip objects from row objects."""
-    tip = ReadingTipFactory.get_new_reading_tip(row["type"])
-    tip.set_values_from_dict(row)
+    row_dict = dict(row)
+    row_dict["tip_id"] = row["id"]
+    tip = ReadingTipFactory.get_new_reading_tip(row_dict["type"])
+    tip.set_values_from_dict(row_dict)
     return tip
 
 

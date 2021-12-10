@@ -4,11 +4,10 @@ from entities.tip_types import TipTypes
 class ReadingTip:
     """Class, that describes base reading tips
     """
-    TYPE = TipTypes.UNDEFINED
 
     def __init__(self):
         """ Initializes an empty base reading tip. """
-        self._contents = {"type": self.TYPE}
+        self._contents = {"type": self.tip_type}
 
     @property
     def tip_id(self):
@@ -36,16 +35,16 @@ class ReadingTip:
     @property
     def tip_type(self):
         """Returns the tip type."""
-        return self._contents["type"]
+        return TipTypes.UNDEFINED
 
     def set_values_from_dict(self, contents):
         """ Sets corresponding object variables to values indicated
-        by the 'dictionary''s key/value pairs.
+        by the dictionary's key/value pairs.
 
         Args:
             contents (dict): A dictionary with variable name/value pairs.
         """
-        self.tip_id = contents["id"]
+        self.tip_id = contents["tip_id"]
         self.title = contents["title"]
 
     def get_contents(self):

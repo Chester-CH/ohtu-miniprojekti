@@ -1,17 +1,18 @@
+from entities.tip_types import TipTypes
 from entities.book_tip import BookTip
+from entities.podcast_tip import PodcastTip
 from entities.video_tip import VideoTip
 from entities.blogpost_tip import BlogpostTip
-from entities.podcast_tip import PodcastTip
 
 
 class ReadingTipFactory:
     """A factory class for creating new reading tips of various types.
     """
     _TIP_CLASSES = {
-        BookTip.TYPE: BookTip,
-        VideoTip.TYPE: VideoTip,
-        BlogpostTip.TYPE: BlogpostTip,
-        PodcastTip.TYPE: PodcastTip
+        TipTypes.BOOK: BookTip,
+        TipTypes.VIDEO: VideoTip,
+        TipTypes.BLOGPOST: BlogpostTip,
+        TipTypes.PODCAST: PodcastTip
     }
 
     @staticmethod
