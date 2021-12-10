@@ -53,9 +53,10 @@ class TipsRepository:
                 tip.tip_id = cursor.lastrowid
                 return True
 
-            sql = """UPDATE Tips SET title=:title
-                        WHERE id=? AND visible=TRUE"""
-            cursor.execute(sql, [contents["tip_id"]])
+            # Update old data
+            sql = """UPDATE Tips SET title=?
+                     WHERE id=? AND visible=TRUE"""
+            cursor.execute(sql, [contents["title"], contents["tip_id"]])
             self._connection.commit()
             if cursor.rowcount == 1:
                 return True

@@ -39,6 +39,19 @@ class TestTipsRepository(unittest.TestCase):
         answer = cursor.execute(sql).fetchone()
         self.assertEqual(answer[0], tip_type)
 
+    def test_store_reading_tips_stores_new_title_correctly(self):
+        new_title = "Story about ham"
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip.title = "Snowcrash"
+        self.tips_repository.store_reading_tip(tip)
+        sql = "SELECT title FROM Tips;"
+        tip.title = new_title
+        self.tips_repository.store_reading_tip(tip)
+
+        cursor = self.connection.cursor()
+        answer = cursor.execute(sql).fetchone()
+        self.assertEqual(answer[0], new_title)
+
     def test_get_tips_gives_an_object_with_the_right_title(self):
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
         tip.title = "Snowcrash"
