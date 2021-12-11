@@ -66,3 +66,13 @@ class ReadingTipAppLibrary:
             raise AssertionError(
                 f"The tip titled {tip_title} is visible."
             )
+    
+    def check_tips_title_and_type_match(self, title, type):
+        sql = "SELECT title, type FROM Tips WHERE title=:title;"
+        cursor = self.connection.cursor()
+        answers = cursor.execute(sql, {"title":title, "type":type}).fetchall()[0]
+        if title != answers[0] and type != answers[1]:
+            raise AssertionError(
+                f"Tips title {title} doesn't mach {type}\
+                  which are {answers[0]} and {answers[1]}"
+            )
