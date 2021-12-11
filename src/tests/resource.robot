@@ -5,6 +5,7 @@ Library  ../ReadingTipAppLibrary.py
 User Adds New Tip Successfully
     [Arguments]  ${tip title}
     Input Command  1
+    Input Command  1
     Input Command  ${tip title}
     Input Stop Application
     Run Application

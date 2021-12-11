@@ -2,7 +2,11 @@
 Resource  resource.robot
 
 *** Keywords ***
+Select To Add New Tip
+    Input Command  1
 
+Select Book To Tips Type
+    Input Command  1
 
 *** Test Cases ***
 Program Starts And Prints The Greeting And The Menu
@@ -13,7 +17,8 @@ Program Starts And Prints The Greeting And The Menu
     Output Should Contain  ${menu}
 
 User Can Go To Add New Tips Menu
-    Input Command  1
+    Select To Add New Tip
+    Select Book To Tips Type
     Input Command  Dune
     Input Stop And Run Application
     ${tips menu} =  Get Ui Message  AddNewTip  ADD_NEW_TIP_TEXT
