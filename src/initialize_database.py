@@ -9,7 +9,11 @@ def create_tables(database_connection=default_database_connection):
                 type TEXT,
                 title TEXT,
                 datetime DATETIME,
-                visible BOOLEAN
+                visible BOOLEAN,
+                writer TEXT,
+                isbn TEXT,
+                url TEXT,
+                description TEXT
                 );
           """
 
