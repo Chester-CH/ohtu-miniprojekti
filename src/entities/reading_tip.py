@@ -10,13 +10,13 @@ class ReadingTip:
         contents["title"] = Content()
         contents["tip_id"] = Content()
         contents["tip_type"] = Content(value=tip_type)
+        contents["description"] = Content()
         self._contents = contents
 
     def __setitem__(self, content_type, value):
         if not content_type in self._contents:
             raise ValueError("No such content type.")
-        if value:
-            self._contents[content_type].value = value
+        self._contents[content_type].value = value
 
     def __getitem__(self, content_type):
         if content_type in self._contents:

@@ -1,6 +1,8 @@
 import unittest
 from entities.reading_tip import ReadingTip
 from entities.tip_types import TipTypes
+from entities.content import Content
+
 
 class TestReadingTip(unittest.TestCase):
     def setUp(self):
@@ -19,3 +21,10 @@ class TestReadingTip(unittest.TestCase):
         self.assertEqual(values["tip_id"], 100)
         self.assertEqual(values["title"], "Lord of the Flies")
 
+    def test_set_values_from_dict_sets_only_content_types_in_tip(self):
+        tip = ReadingTip(TipTypes.BOOK, {"author": Content()})
+        new_contents = {"author": "Asimov", "url": "www.google.com"}
+        tip.set_values_from_dict(new_contents)
+        contents = tip.get_contents()
+        self.assertEqual(contents["author"], "Asimov")
+        self.assertTrue("url" not in contents)

@@ -4,28 +4,26 @@ from entities.content import Content
 
 
 def _create_new_book_tip():
-    contents = {"author": Content(), "isbn": Content(),
-                "description": Content()}
+    contents = {"author": Content(), "isbn": Content()}
     tip = ReadingTip(TipTypes.BOOK, contents)
     return tip
 
 
 def _create_new_video_tip():
-    contents = {"url": Content(), "description": Content()}
+    contents = {"url": Content()}
     tip = ReadingTip(TipTypes.VIDEO, contents)
     return tip
 
 
 def _create_new_blogpost_tip():
-    contents = {"url": Content(), "author": Content(),
-                "description": Content()}
+    contents = {"url": Content(), "author": Content()}
     tip = ReadingTip(TipTypes.BLOGPOST, contents)
     return tip
 
 
 def _create_new_podcast_tip():
     contents = {"url": Content(), "author": Content(),
-                "name": Content(), "description": Content()}
+                "name": Content()}
     tip = ReadingTip(TipTypes.PODCAST, contents)
     return tip
 
