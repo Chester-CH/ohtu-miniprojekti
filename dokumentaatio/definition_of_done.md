@@ -1,9 +1,9 @@
 # Definition of Done
-alustava
 
 ## Yleiset määritelmät
 * Testikattavuus vähintään 70 % ja testit menevät läpi
 * Koodi noudattaa Pylint-sääntöjä (arvosana vähintään 9,00)
+* Testikattavuus ja pylint-säännöt eivät koske käyttöliittymää
 * Koodissa asiat ovat nimetty selkeästi ja englanniksi
 * CI-palvelun (Git Hub Actions) testit menevät läpi
 * CI-palvelun tila (eli ovatko testit läpäisty) on näkyvissä repositorion etusivulla
