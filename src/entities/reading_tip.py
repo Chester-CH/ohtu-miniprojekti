@@ -1,41 +1,27 @@
-from entities.tip_types import TipTypes
+from entities.content import Content
 
 
 class ReadingTip:
-    """Class, that describes base reading tips
+    """ A class for handling singular reading tips.
     """
 
-    def __init__(self):
+    def __init__(self, tip_type, contents):
         """ Initializes an empty base reading tip. """
-        self._contents = {"type": self.tip_type}
+        contents["title"] = Content()
+        contents["tip_id"] = Content()
+        contents["tip_type"] = Content(value=tip_type)
+        self._contents = contents
 
-    @property
-    def tip_id(self):
-        """Returns the tip id, or None.
-        """
-        return self._contents.get("tip_id", None)
+    def __setitem__(self, content_type, value):
+        if not content_type in self._contents:
+            raise ValueError("No such content type.")
+        if value:
+            self._contents[content_type].value = value
 
-    @tip_id.setter
-    def tip_id(self, tip_id):
-        """Sets the tip id."""
-        if tip_id:
-            self._contents["tip_id"] = tip_id
-
-    @property
-    def title(self):
-        """Returns the tip title, or None."""
-        return self._contents.get("title", None)
-
-    @title.setter
-    def title(self, title):
-        """Sets the title."""
-        if title:
-            self._contents["title"] = title
-
-    @property
-    def tip_type(self):
-        """Returns the tip type."""
-        return TipTypes.UNDEFINED
+    def __getitem__(self, content_type):
+        if content_type in self._contents:
+            return self._contents[content_type].value
+        raise ValueError("No such content type.")
 
     def set_values_from_dict(self, contents):
         """ Sets corresponding object variables to values indicated
@@ -44,15 +30,14 @@ class ReadingTip:
         Args:
             contents (dict): A dictionary with variable name/value pairs.
         """
-        self.tip_id = contents["tip_id"]
-        self.title = contents["title"]
+        for content_type, value in contents.items():
+            if content_type in self._contents:
+                self._contents[content_type].value = value
 
     def get_contents(self):
         """Returns the contents of this tip as a dict. Field names act as keys.
-        The dict only contains not-None values.
         """
         contents = {}
-        for key, value in self._contents.items():
-            if value:
-                contents[key] = value
+        for content_type, content in self._contents.items():
+            contents[content_type] = content.value
         return contents

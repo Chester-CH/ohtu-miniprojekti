@@ -1,19 +1,43 @@
 from entities.tip_types import TipTypes
-from entities.book_tip import BookTip
-from entities.podcast_tip import PodcastTip
-from entities.video_tip import VideoTip
-from entities.blogpost_tip import BlogpostTip
+from entities.reading_tip import ReadingTip
+from entities.content import Content
+
+
+def _create_new_book_tip():
+    contents = {"author": Content(), "isbn": Content(),
+                "description": Content()}
+    tip = ReadingTip(TipTypes.BOOK, contents)
+    return tip
+
+
+def _create_new_video_tip():
+    contents = {"url": Content(), "description": Content()}
+    tip = ReadingTip(TipTypes.VIDEO, contents)
+    return tip
+
+
+def _create_new_blogpost_tip():
+    contents = {"url": Content(), "author": Content(),
+                "description": Content()}
+    tip = ReadingTip(TipTypes.BLOGPOST, contents)
+    return tip
+
+
+def _create_new_podcast_tip():
+    contents = {"url": Content(), "author": Content(),
+                "name": Content(), "description": Content()}
+    tip = ReadingTip(TipTypes.PODCAST, contents)
+    return tip
 
 
 class ReadingTipFactory:
     """A factory class for creating new reading tips of various types.
     """
-    _TIP_CLASSES = {
-        TipTypes.BOOK: BookTip,
-        TipTypes.VIDEO: VideoTip,
-        TipTypes.BLOGPOST: BlogpostTip,
-        TipTypes.PODCAST: PodcastTip
-    }
+    _TIP_CONSTRUCTORS = {
+        TipTypes.BOOK: _create_new_book_tip,
+        TipTypes.VIDEO: _create_new_video_tip,
+        TipTypes.BLOGPOST: _create_new_blogpost_tip,
+        TipTypes.PODCAST: _create_new_podcast_tip}
 
     @staticmethod
     def get_new_reading_tip(tip_type):
@@ -27,6 +51,6 @@ class ReadingTipFactory:
         Returns:
             ReadingTip: Returns a new empty reading tip object.
         """
-        if tip_type in ReadingTipFactory._TIP_CLASSES:
-            return ReadingTipFactory._TIP_CLASSES[tip_type]()
+        if tip_type in ReadingTipFactory._TIP_CONSTRUCTORS:
+            return ReadingTipFactory._TIP_CONSTRUCTORS[tip_type]()
         raise ValueError("Wrong type")

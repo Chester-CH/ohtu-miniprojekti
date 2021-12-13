@@ -36,6 +36,6 @@ class TipPrinter:
     @staticmethod
     def get_description(tip):
         """ Returns a string description of the contents of this tip. """
-        description = f"{tip.title}, {TipPrinter.TIP_TYPE_IN_FINNISH[tip.tip_type]}" + \
-            TipPrinter.TIP_TYPE_PRINTERS[tip.tip_type](tip)
+        description = f"{tip['title']}, {TipPrinter.TIP_TYPE_IN_FINNISH[tip['tip_type']]}" + \
+            TipPrinter.TIP_TYPE_PRINTERS[tip['tip_type']](tip)
         return description

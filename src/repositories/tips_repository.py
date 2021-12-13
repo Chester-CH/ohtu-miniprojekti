@@ -34,6 +34,7 @@ class TipsRepository:
             cursor = self._connection.cursor()
             cursor.execute(sql, [tip_id])
             self._connection.commit()
+
             if cursor.rowcount == 1:
                 return True
             return False
@@ -44,18 +45,19 @@ class TipsRepository:
         try:
             cursor = self._connection.cursor()
             contents = tip.get_contents()
-            if not "tip_id" in contents:
+            if not tip["tip_id"]:
                 sql = """INSERT INTO Tips (type, title, datetime, visible)
                          VALUES (?, ?, ?, TRUE)"""
                 cursor.execute(
-                    sql, [contents["type"], contents["title"], datetime.now()])
+                    sql, [contents["tip_type"], contents["title"], datetime.now()])
                 self._connection.commit()
-                tip.tip_id = cursor.lastrowid
+                tip["tip_id"] = cursor.lastrowid
                 return True
 
             # Update old data
             sql = """UPDATE Tips SET title=?
                      WHERE id=? AND visible=TRUE"""
+
             cursor.execute(sql, [contents["title"], contents["tip_id"]])
             self._connection.commit()
             if cursor.rowcount == 1:

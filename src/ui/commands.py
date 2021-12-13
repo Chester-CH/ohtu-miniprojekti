@@ -17,8 +17,7 @@ class SelectTypeMenuCommands():
         "1": TipTypes.BOOK,
         "2": TipTypes.VIDEO,
         "3": TipTypes.BLOGPOST,
-        "4": TipTypes.PODCAST,
-        "5": TipTypes.UNDEFINED
+        "4": TipTypes.PODCAST
     }
 
 
@@ -43,7 +42,7 @@ class AddNewTip(Command):
     ADDITION_FAIL_TEXT = "Uuden lukuvinkin luonti epäonnistui."
     ADD_NEW_TIP_TEXT = "Kirjoita otsikko: "
     TIPS_TYPES_TEXT = "\nLukuvinkkien tyypit:\n1: Kirja\n2: Video\n" \
-                      "3: Blogpost\n4: Podcast\n5: Määrittelemätön"
+                      "3: Blogpost\n4: Podcast"
     ADD_TYPE_TEXT = "Syötä tyyppi: "
     BAD_TYPE_NUMBER = "Virheellinen syöte"
 
@@ -51,8 +50,8 @@ class AddNewTip(Command):
         tips_type = self._select_tips_type()
         input_title = self._io.read(self.ADD_NEW_TIP_TEXT)
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
-        reading_tip.title = input_title
-        if reading_tip.title:
+        reading_tip["title"] = input_title
+        if reading_tip["title"]:
             if self._reading_tip_service.store_reading_tip(reading_tip):
                 self._io.write(self.ADDITION_SUCCESS_TEXT)
                 return

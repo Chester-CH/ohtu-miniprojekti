@@ -40,7 +40,7 @@ class ReadingTipService:
         if not tip:
             return False
 
-        if self._tips_repository.remove_tip(tip.tip_id):
+        if self._tips_repository.remove_tip(tip["tip_id"]):
             return True
         return False
 

@@ -14,24 +14,24 @@ class TestTipsRepository(unittest.TestCase):
 
     def test_store_reading_tip_gives_boolean_true(self):
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
-        tip.title = "Snowcrash"
+        tip['title'] = "Snowcrash"
         boolean = self.tips_repository.store_reading_tip(tip)
         self.assertTrue(boolean)
 
     def test_store_reading_tip_stores_the_right_title(self):
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
-        tip.title = "Snowcrash"
+        tip['title'] = "Snowcrash"
         self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT title FROM Tips;"
         cursor = self.connection.cursor()
         answer = cursor.execute(sql).fetchone()
-        self.assertEqual(answer[0], tip.title)
+        self.assertEqual(answer[0], tip["title"])
 
     def test_store_reading_tips_stores_the_right_type(self):
         tip_type = TipTypes.BOOK
         tip = ReadingTipFactory.get_new_reading_tip(tip_type)
-        tip.title = "Snowcrash"
+        tip['title'] = "Snowcrash"
         self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT type FROM Tips;"
@@ -42,28 +42,28 @@ class TestTipsRepository(unittest.TestCase):
     def test_store_reading_tips_stores_new_title_correctly(self):
         new_title = "Story about ham"
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
-        tip.title = "Snowcrash"
+        tip['title'] = "Snowcrash"
         self.tips_repository.store_reading_tip(tip)
-        sql = "SELECT title FROM Tips;"
-        tip.title = new_title
-        self.tips_repository.store_reading_tip(tip)
+        tip['title'] = new_title
+        self.assertTrue(self.tips_repository.store_reading_tip(tip))
 
         cursor = self.connection.cursor()
+        sql = "SELECT title FROM Tips;"
         answer = cursor.execute(sql).fetchone()
         self.assertEqual(answer[0], new_title)
 
     def test_get_tips_gives_an_object_with_the_right_title(self):
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
-        tip.title = "Snowcrash"
+        tip['title'] = "Snowcrash"
         self.tips_repository.store_reading_tip(tip)
 
         tip_list = self.tips_repository.get_tips()
-        self.assertEqual(tip_list[0].title, tip.title)
+        self.assertEqual(tip_list[0]["title"], tip["title"])
 
     def test_remove_tip_changes_tips_visible_value_from_true_to_false(self):
         input_title = "Pipsa Possu ja yksisarvinen"
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
-        tip.title = input_title
+        tip['title'] = input_title
         self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT id, visible FROM Tips WHERE title=?;"
@@ -79,7 +79,7 @@ class TestTipsRepository(unittest.TestCase):
     def test_get_tips_doesnt_give_removed_tip(self):
         input_title = "Bret Easton Ellis: Glamorama"
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
-        tip.title = input_title
+        tip['title'] = input_title
         self.tips_repository.store_reading_tip(tip)
 
         sql = "SELECT id FROM Tips WHERE title=?;"
