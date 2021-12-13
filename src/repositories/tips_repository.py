@@ -42,29 +42,57 @@ class TipsRepository:
             return False
 
     def store_reading_tip(self, tip):
+
+        def add_content(contents, key):
+            if key not in contents.keys():
+                return None
+            return contents[key]
+
+
         try:
             cursor = self._connection.cursor()
             contents = tip.get_contents()
             if not tip["tip_id"]:
-                sql = """INSERT INTO Tips (type, title, datetime, visible)
-                         VALUES (?, ?, ?, TRUE)"""
+                sql = """INSERT INTO Tips (type, title, visible, author, isbn,
+                         url, name, description, datetime)
+                         VALUES (?, ?, TRUE, ?, ?, ?, ?, ?, ?)"""
                 cursor.execute(
-                    sql, [contents["tip_type"], contents["title"], datetime.now()])
+                    sql, [
+                        add_content(contents, "tip_type"),
+                        add_content(contents, "title"),
+                        add_content(contents, "author"),
+                        add_content(contents, "isbn"),
+                        add_content(contents, "url"),
+                        add_content(contents, "name"),
+                        add_content(contents, "description"),
+                        datetime.now()
+                    ]
+                )
                 self._connection.commit()
                 tip["tip_id"] = cursor.lastrowid
                 return True
 
             # Update old data
-            sql = """UPDATE Tips SET title=?
+            sql = """UPDATE Tips SET title=?, author=?,
+                     isbn=?, url=?, name=?, description=?
                      WHERE id=? AND visible=TRUE"""
 
-            cursor.execute(sql, [contents["title"], contents["tip_id"]])
+            cursor.execute(
+                sql, [
+                    add_content(contents, "title"),
+                    add_content(contents, "author"),
+                    add_content(contents, "isbn"),
+                    add_content(contents, "url"),
+                    add_content(contents, "name"),
+                    add_content(contents, "description"),
+                    add_content(contents, "tip_id")
+                ]
+            )
             self._connection.commit()
             if cursor.rowcount == 1:
                 return True
             return False
         except DatabaseError:
             return False
-
 
 tips_repository = TipsRepository()
