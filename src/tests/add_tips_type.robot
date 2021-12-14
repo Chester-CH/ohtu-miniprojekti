@@ -8,6 +8,9 @@ Go To Main Menu From Book Tip Writer Selection
     Input Command  ${EMPTY}
     Input Command  ${EMPTY}
 
+Browse Output Contains The Created Book Tip
+    Output Should Contain  1: Marcovaldo, kirja
+
 *** Test Cases ***
 Tip With Right Name And Type Is Saved
     Select Add New Tip From Main Menu
@@ -27,4 +30,4 @@ Tips Type Is Shown When Browsing Tips
     Quit Browsing Tips
     Select Quit Program From Main Menu
     Run Application
-    Output Should Contain  1: Marcovaldo, kirja
+    Browse Output Contains The Created Book Tip
