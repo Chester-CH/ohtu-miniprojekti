@@ -69,3 +69,11 @@ Input ISBN
 Input Description
     [Arguments]  ${desc}
     Input Command  ${desc}
+
+From Add Menu Add New Book Tip On Book Written By
+    [Arguments]  ${book}  ${author}
+    Select Tip Type Book
+    Input Book Name  ${book}
+    Input Writer  ${author}
+    Input ISBN  0
+    Input Description  ${EMPTY}

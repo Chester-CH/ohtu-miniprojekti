@@ -51,17 +51,17 @@ class ReadingTipAppLibrary:
             return getattr(getattr(commands, command_type), message_type)
 
     def program_remembers_tip(self, tip_title):
-        sql = "SELECT title FROM Tips;"
+        sql = "SELECT title FROM Tips WHERE title=?;"
         cursor = self.connection.cursor()
-        answer = cursor.execute(sql).fetchone()
+        answer = cursor.execute(sql, [tip_title]).fetchone()
         if answer[0] != tip_title:
             raise AssertionError(
                 f"The tip with title {tip_title} was not saved.")
 
     def program_doesnt_show_tip(self, tip_title):
-        sql = "SELECT visible FROM Tips WHERE title=:title;"
+        sql = "SELECT visible FROM Tips WHERE title=?;"
         cursor = self.connection.cursor()
-        answer = cursor.execute(sql, {"title":tip_title}).fetchone()
+        answer = cursor.execute(sql, [tip_title]).fetchone()
         if answer[0]:
             raise AssertionError(
                 f"The tip titled {tip_title} is visible."
