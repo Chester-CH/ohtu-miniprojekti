@@ -70,6 +70,14 @@ Input Description
     [Arguments]  ${desc}
     Input Command  ${desc}
 
+Input URL
+    [Arguments]  ${url}
+    Input Command  ${url}   
+
+Input Episode Name 
+    [Arguments]  ${name}
+    Input Command  ${name}
+
 From Add Menu Add New Book Tip On Book Written By
     [Arguments]  ${book}  ${author}
     Select Tip Type Book
