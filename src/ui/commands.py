@@ -63,7 +63,9 @@ class AddNewTip(Command):
             TipTypes.PODCAST: self._fill_podcast_fields
         }
 
-    def _prompt_user(self, reading_tip, content_type, prompt_message, fail_message):
+    def _prompt_user(self, reading_tip, content_type, prompt_message, fail_message=None):
+        if not fail_message:
+            fail_message = self.FIELD_EMPTY_TEXT
         while True:
             value = self._io.read(prompt_message)
             if reading_tip.try_set(content_type, value):
@@ -73,38 +75,32 @@ class AddNewTip(Command):
                 self._io.write(fail_message)
 
     def _fill_book_fields(self, reading_tip):
-        self._prompt_user(reading_tip, "author",
-                          self.ADD_AUTHOR, self.FIELD_EMPTY_TEXT)
-        self._prompt_user(reading_tip, "isbn", self.ADD_ISBN,
-                          self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "author", self.ADD_AUTHOR)
+        self._prompt_user(reading_tip, "isbn", self.ADD_ISBN)
 
     def _fill_blogpost_fields(self, reading_tip):
         self._prompt_user(reading_tip, "url", self.ADD_URL,
                           self.FIELD_EMPTY_TEXT)
-        self._prompt_user(reading_tip, "author",
-                          self.ADD_AUTHOR, self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "author", self.ADD_AUTHOR)
 
     def _fill_video_fields(self, reading_tip):
-        self._prompt_user(reading_tip, "url", self.ADD_URL,
-                          self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "url", self.ADD_URL)
 
     def _fill_podcast_fields(self, reading_tip):
-        self._prompt_user(reading_tip, "url", self.ADD_URL,
-                          self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "url", self.ADD_URL)
         self._prompt_user(reading_tip, "author",
-                          self.ADD_AUTHOR, self.FIELD_EMPTY_TEXT)
-        self._prompt_user(reading_tip, "name", self.ADD_NAME,
-                          self.FIELD_EMPTY_TEXT)
+                          self.ADD_AUTHOR)
+        self._prompt_user(reading_tip, "name", self.ADD_NAME)
 
     def execute(self):
         tips_type = self._select_tips_type()
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
 
         self._prompt_user(reading_tip, "title",
-                          self.ADD_NEW_TIP_TEXT, self.FIELD_EMPTY_TEXT)
+                          self.ADD_NEW_TIP_TEXT)
         self.handle_tip_input[tips_type](reading_tip)
         self._prompt_user(reading_tip, "description",
-                          self.ADD_DESCRIPTION, self.FIELD_EMPTY_TEXT)
+                          self.ADD_DESCRIPTION)
 
         if self._reading_tip_service.store_reading_tip(reading_tip):
             self._io.write(self.ADDITION_SUCCESS_TEXT)
