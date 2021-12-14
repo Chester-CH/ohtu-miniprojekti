@@ -77,7 +77,7 @@ class TestTipsRepository(unittest.TestCase):
         self.assertEqual(answer2[1], False)
 
     def test_get_tips_doesnt_give_removed_tip(self):
-        input_title = "Bret Easton Ellis: Glamorama"
+        input_title = "Glamorama"
         tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
         tip['title'] = input_title
         self.tips_repository.store_reading_tip(tip)
@@ -89,3 +89,57 @@ class TestTipsRepository(unittest.TestCase):
         self.tips_repository.remove_tip(tip_id[0])
         tips = self.tips_repository.get_tips()
         self.assertEqual(len(tips), 0)
+
+    def test_storing_book_type_tip_with_its_parameters(self):
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BOOK)
+        tip["title"] = title = "Taivaallinen vastaanotto"
+        tip["author"] = author = "Jukka Viikilä"
+        tip["isbn"] = isbn = "978-951-1-37793-1"
+        tip["description"] = description = "Finlandia 2021"
+        self.tips_repository.store_reading_tip(tip)
+        tip = self.tips_repository.get_tips()[0]
+        self.assertEqual(
+            (tip["title"], tip["author"], tip["isbn"], tip["description"]),
+            (title, author, isbn, description)
+        )
+
+    def test_storing_video_type_tip_with_its_parameters(self):
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.VIDEO)
+        tip["title"] = title = "Joulusydän"
+        tip["url"] = url = "https://www.youtube.com/watch?v=rf-s3PuSkvs"
+        tip["description"] = description = "a cool christmas song"
+        self.tips_repository.store_reading_tip(tip)
+        tip = self.tips_repository.get_tips()[0]
+        self.assertEqual(
+            (tip["title"], tip["url"], tip["description"]),
+            (title, url, description)
+        )
+
+    def test_storing_blogpost_type_tip_with_its_parameters(self):
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.BLOGPOST)
+        tip["title"] = title = "How Secure Is The Flask User Session?"
+        tip["author"] = author = "Miguel Grinberg"
+        tip["url"] = url = "https://blog.miguelgrinberg.com/post/\
+                            how-secure-is-the-flask-user-session"
+        tip["description"] = description = "material for tsoha"
+        self.tips_repository.store_reading_tip(tip)
+        tip = self.tips_repository.get_tips()[0]
+        self.assertEqual(
+            (tip["title"], tip["author"], tip["url"], tip["description"]),
+            (title, author, url, description)
+        )
+
+    def test_storing_podcast_type_tip_with_its_parameters(self):
+        tip = ReadingTipFactory.get_new_reading_tip(TipTypes.PODCAST)
+        tip["title"] = title = "Avaruusteleskooppi Hubblen \
+                                seuraaja saattaa nähdä \
+                                maailmankaikkeuden alkuun"
+        tip["url"] = url = "https://areena.yle.fi/audio/1-50990157"
+        tip["name"] = name = "Tiedeykkönen"
+        tip["description"] = description = "space nad universe"
+        self.tips_repository.store_reading_tip(tip)
+        tip = self.tips_repository.get_tips()[0]
+        self.assertEqual(
+            (tip["title"], tip["url"], tip["name"], tip["description"]),
+            (title, url, name, description)
+        )
