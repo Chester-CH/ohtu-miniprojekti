@@ -136,7 +136,7 @@ class TestTipsRepository(unittest.TestCase):
                                 maailmankaikkeuden alkuun"
         tip["url"] = url = "https://areena.yle.fi/audio/1-50990157"
         tip["name"] = name = "Tiedeykkönen"
-        tip["description"] = description = "space nad universe"
+        tip["description"] = description = "space and universe"
         self.tips_repository.store_reading_tip(tip)
         tip = self.tips_repository.get_tips()[0]
         self.assertEqual(

@@ -61,7 +61,6 @@ Tips Blogpost Type Is Shown When Browsing Tips
     Select Quit Program From Main Menu
     Run Application
     Browse Output Contains The Created Blogpost Tip
-    Output Should Contain  1: Omikron jäi haaviin nopeasti, blogiposti
 
 Tip With Right Name And Type Podcast Is Saved
     Select Add New Tip From Main Menu
