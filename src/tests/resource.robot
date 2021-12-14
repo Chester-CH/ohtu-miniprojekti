@@ -26,7 +26,7 @@ Input Stop And Run Application
     Input Stop Application
     Run Application
 
-Add New Tip From Main Menu
+Select Add New Tip From Main Menu
     Input Command  1
 
 Browse Tips From Main Menu
@@ -50,3 +50,6 @@ Select Tip Type Blogpost
 
 Select Tip Type Podcast
     Input Command  4
+
+Select Quit Program From Main Menu
+    Input Command  0

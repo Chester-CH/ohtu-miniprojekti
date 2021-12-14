@@ -3,25 +3,70 @@ Resource  resource.robot
 
 *** Keywords ***
 
-*** Test Cases ***
-Program Starts And Prints The Greeting And The Menu
-    Input Stop And Run Application
+Output Contains Main Menu Instructions
     ${greet} =  Get Ui Message  MainMenu  GREET_TEXT
     ${menu} =  Get Ui Message  MainMenu  MENU_TEXT
     Output Should Contain  ${greet}
     Output Should Contain  ${menu}
 
-User Can Go To Add New Tips Menu
-    Add New Tip From Main Menu
-    Select Tip Type Book
-    Input Command  Dune
-    Input Stop And Run Application
-    ${tips menu} =  Get Ui Message  AddNewTip  ADD_NEW_TIP_TEXT
+Output Contains Tip Type Question
+    ${tips menu} =  Get Ui Message  AddNewTip  TIPS_TYPES_TEXT
     Output Should Contain  ${tips menu}
 
+Go To Main Menu From Tip Type Selection
+    Input Command  ${EMPTY}
+
+Input Book Name
+    [Arguments]  ${name}
+    Input Command  ${name}
+
+Input Writer
+    [Arguments]  ${name}
+    Input Command  ${name}
+
+Input ISBN
+    [Arguments]  ${isbn}
+    Input Command  ${isbn}
+
+Input Description
+    [Arguments]  ${desc}
+    Input Command  ${desc}
+
+Output Contains Tip Creation Success
+    ${tips menu} =  Get Ui Message  AddNewTip  ADDITION_SUCCESS_TEXT
+    Output Should Contain  ${tips menu}
+
+*** Test Cases ***
+Program Starts And Prints The Greeting And The Menu
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Main Menu Instructions
+    
+User Can Go To Add New Tips Menu
+    Select Add New Tip From Main Menu
+    Go To Main Menu From Tip Type Selection
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Tip Type Question
+
 User Can Add New Tip From Tips Menu And Gets Success Confirmation
-    User Adds New Tip Successfully  Dune
+    Select Add New Tip From Main Menu
+    Select Tip Type Book
+    Input Book Name  Dune
+    Input Writer  Frank Herbert
+    Input ISBN  0441172717
+    Input Description  A scifi book
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Tip Creation Success
 
 User Can Add New Tip And On Success The Program Will Remember The Addition
-    User Adds New Tip Successfully  Dune
+    Select Add New Tip From Main Menu
+    Select Tip Type Book
+    Input Book Name  Dune
+    Input Writer  Frank Herbert
+    Input ISBN  0441172717
+    Input Description  A scifi book
+    Select Quit Program From Main Menu
+    Run Application
     Program Remembers Tip  Dune

@@ -79,8 +79,7 @@ class AddNewTip(Command):
         self._prompt_user(reading_tip, "isbn", self.ADD_ISBN)
 
     def _fill_blogpost_fields(self, reading_tip):
-        self._prompt_user(reading_tip, "url", self.ADD_URL,
-                          self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "url", self.ADD_URL)
         self._prompt_user(reading_tip, "author", self.ADD_AUTHOR)
 
     def _fill_video_fields(self, reading_tip):
@@ -88,12 +87,13 @@ class AddNewTip(Command):
 
     def _fill_podcast_fields(self, reading_tip):
         self._prompt_user(reading_tip, "url", self.ADD_URL)
-        self._prompt_user(reading_tip, "author",
-                          self.ADD_AUTHOR)
+        self._prompt_user(reading_tip, "author", self.ADD_AUTHOR)
         self._prompt_user(reading_tip, "name", self.ADD_NAME)
 
     def execute(self):
         tips_type = self._select_tips_type()
+        if not tips_type:
+            return
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
 
         self._prompt_user(reading_tip, "title",
@@ -113,6 +113,8 @@ class AddNewTip(Command):
             type_input = self._io.read(self.ADD_TYPE_TEXT)
             if self._validate_type_input(type_input):
                 break
+            if type_input == "":
+                return None
             self._io.write(self.BAD_TYPE_NUMBER)
         return SelectTypeMenuCommands.TYPE_MENU_COMMANDS[type_input]
 
