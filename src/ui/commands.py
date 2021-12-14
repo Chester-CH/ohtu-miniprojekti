@@ -45,18 +45,44 @@ class AddNewTip(Command):
                       "3: Blogpost\n4: Podcast"
     ADD_TYPE_TEXT = "Syötä tyyppi: "
     BAD_TYPE_NUMBER = "Virheellinen syöte"
+    ADD_AUTHOR = "Syötä tekijä: "
+    ADD_ISBN = "Syötä ISBN numero: "
+    ADD_URL = "Syötä verkko-osoite: "
+    ADD_NAME = "Syötä nimi: "
 
     def execute(self):
         tips_type = self._select_tips_type()
         input_title = self._io.read(self.ADD_NEW_TIP_TEXT)
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
         reading_tip["title"] = input_title
+
+        if tips_type == TipTypes.BOOK:
+            author = self._io.read(self.ADD_AUTHOR)
+            isbn = self._io.read(self.ADD_ISBN)
+            reading_tip["author"] = author
+            reading_tip["isbn"] = isbn
+        if tips_type == TipTypes.VIDEO:
+            url = self._io.read(self.ADD_URL)
+            reading_tip["url"] = url
+        if tips_type == TipTypes.BLOGPOST:
+            url = self._io.read(self.ADD_URL)
+            author = self._io.read(self.ADD_AUTHOR)
+            reading_tip["url"] = url
+            reading_tip["author"] = author
+        if tips_type == TipTypes.PODCAST:
+            url = self._io.read(self.ADD_URL)
+            author = self._io.read(self.ADD_AUTHOR)
+            name = self._io.read(self.ADD_NAME)
+            reading_tip["url"] = url
+            reading_tip["author"] = author
+            reading_tip["name"] = name
+        
         if reading_tip["title"]:
             if self._reading_tip_service.store_reading_tip(reading_tip):
                 self._io.write(self.ADDITION_SUCCESS_TEXT)
                 return
         self._io.write(self.ADDITION_FAIL_TEXT)
-
+       
     def _select_tips_type(self):
         self._io.write(self.TIPS_TYPES_TEXT)
         while True:
