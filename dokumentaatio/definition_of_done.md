@@ -45,4 +45,7 @@ Käyttäjä voi poistaa vinkin
 	Vinkin voi poistaa antamalla vinkin id-numeron  Syöte 1
 	
 	Vinkkiä ei tulostu selaamisnäkymässä
+
+![Käyttäjä voi merkata lukuvinkin tyypin: kirja, video, blogpost, podcast](https://github.com/Chester-CH/ohtu-miniprojekti/blob/main/src/tests/add_tips_type.robot)
+
 	
