@@ -35,6 +35,7 @@ class QuitProgram(Command):
         self._io.write(self.GOODBYE_TEXT)
         raise QuitSignal
 
+
 class AddNewTip(Command):
     """ Command for adding a new tip, should contain all menu handling for it.
     """
@@ -50,32 +51,46 @@ class AddNewTip(Command):
     ADD_URL = "Syötä verkko-osoite: "
     ADD_NAME = "Syötä nimi: "
 
+    def __init__(self, io, reading_tip_service):
+        super().__init__(io, reading_tip_service)
+        self.handle_tip_input ={
+            TipTypes.BOOK: self._fill_book_fields,
+            TipTypes.BLOGPOST: self._fill_blogpost_fields,
+            TipTypes.VIDEO: self._fill_video_fields,
+            TipTypes.PODCAST: self._fill_podcast_fields
+        }
+
+    def _fill_book_fields(self, reading_tip):
+        author = self._io.read(self.ADD_AUTHOR)
+        isbn = self._io.read(self.ADD_ISBN)
+        reading_tip["author"] = author
+        reading_tip["isbn"] = isbn
+    
+    def _fill_blogpost_fields(self, reading_tip):
+        url = self._io.read(self.ADD_URL)
+        author = self._io.read(self.ADD_AUTHOR)
+        reading_tip["url"] = url
+        reading_tip["author"] = author
+    
+    def _fill_video_fields(self, reading_tip):
+        url = self._io.read(self.ADD_URL)
+        reading_tip["url"] = url
+
+    def _fill_podcast_fields(self, reading_tip):
+        url = self._io.read(self.ADD_URL)
+        author = self._io.read(self.ADD_AUTHOR)
+        name = self._io.read(self.ADD_NAME)
+        reading_tip["url"] = url
+        reading_tip["author"] = author
+        reading_tip["name"] = name
+
     def execute(self):
         tips_type = self._select_tips_type()
         input_title = self._io.read(self.ADD_NEW_TIP_TEXT)
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
         reading_tip["title"] = input_title
 
-        if tips_type == TipTypes.BOOK:
-            author = self._io.read(self.ADD_AUTHOR)
-            isbn = self._io.read(self.ADD_ISBN)
-            reading_tip["author"] = author
-            reading_tip["isbn"] = isbn
-        if tips_type == TipTypes.VIDEO:
-            url = self._io.read(self.ADD_URL)
-            reading_tip["url"] = url
-        if tips_type == TipTypes.BLOGPOST:
-            url = self._io.read(self.ADD_URL)
-            author = self._io.read(self.ADD_AUTHOR)
-            reading_tip["url"] = url
-            reading_tip["author"] = author
-        if tips_type == TipTypes.PODCAST:
-            url = self._io.read(self.ADD_URL)
-            author = self._io.read(self.ADD_AUTHOR)
-            name = self._io.read(self.ADD_NAME)
-            reading_tip["url"] = url
-            reading_tip["author"] = author
-            reading_tip["name"] = name
+        self.handle_tip_input[tips_type](reading_tip)
         
         if reading_tip["title"]:
             if self._reading_tip_service.store_reading_tip(reading_tip):
