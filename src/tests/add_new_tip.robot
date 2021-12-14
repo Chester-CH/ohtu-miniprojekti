@@ -16,22 +16,6 @@ Output Contains Tip Type Question
 Go To Main Menu From Tip Type Selection
     Input Command  ${EMPTY}
 
-Input Book Name
-    [Arguments]  ${name}
-    Input Command  ${name}
-
-Input Writer
-    [Arguments]  ${name}
-    Input Command  ${name}
-
-Input ISBN
-    [Arguments]  ${isbn}
-    Input Command  ${isbn}
-
-Input Description
-    [Arguments]  ${desc}
-    Input Command  ${desc}
-
 Output Contains Tip Creation Success
     ${tips menu} =  Get Ui Message  AddNewTip  ADDITION_SUCCESS_TEXT
     Output Should Contain  ${tips menu}

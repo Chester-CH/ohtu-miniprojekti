@@ -53,3 +53,19 @@ Select Tip Type Podcast
 
 Select Quit Program From Main Menu
     Input Command  0
+
+Input Book Name
+    [Arguments]  ${name}
+    Input Command  ${name}
+
+Input Writer
+    [Arguments]  ${name}
+    Input Command  ${name}
+
+Input ISBN
+    [Arguments]  ${isbn}
+    Input Command  ${isbn}
+
+Input Description
+    [Arguments]  ${desc}
+    Input Command  ${desc}
