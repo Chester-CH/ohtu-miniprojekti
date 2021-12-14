@@ -43,5 +43,10 @@ class ReadingTip:
         return contents
 
     def try_set(self, content_type, value):
-        if self[content_type].validator(value):
+        """Tries to set the field (content_type) to value (value). Returns True if 
+        validation was successful. """
+        content = self._contents[content_type]
+        if content.validator(value):
             self[content_type] = value
+            return True
+        return False

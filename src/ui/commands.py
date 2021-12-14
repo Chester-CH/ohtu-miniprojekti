@@ -12,6 +12,7 @@ class MainMenuCommands():
     ADD_NEW_TIP = "1"
     BROWSE_TIPS = "2"
 
+
 class SelectTypeMenuCommands():
     TYPE_MENU_COMMANDS = {
         "1": TipTypes.BOOK,
@@ -44,6 +45,7 @@ class AddNewTip(Command):
     ADD_NEW_TIP_TEXT = "Kirjoita otsikko: "
     TIPS_TYPES_TEXT = "\nLukuvinkkien tyypit:\n1: Kirja\n2: Video\n" \
                       "3: Blogpost\n4: Podcast"
+    FIELD_EMPTY_TEXT = "Syöte ei voi olla tyhjä."
     ADD_TYPE_TEXT = "Syötä tyyppi: "
     BAD_TYPE_NUMBER = "Virheellinen syöte"
     ADD_AUTHOR = "Syötä tekijä: "
@@ -53,51 +55,58 @@ class AddNewTip(Command):
 
     def __init__(self, io, reading_tip_service):
         super().__init__(io, reading_tip_service)
-        self.handle_tip_input ={
+        self.handle_tip_input = {
             TipTypes.BOOK: self._fill_book_fields,
             TipTypes.BLOGPOST: self._fill_blogpost_fields,
             TipTypes.VIDEO: self._fill_video_fields,
             TipTypes.PODCAST: self._fill_podcast_fields
         }
 
+    def _prompt_user(self, reading_tip, content_type, prompt_message, fail_message):
+        while True:
+            value = self._io.read(prompt_message)
+            if reading_tip.try_set(content_type, value):
+                return
+            else:
+                # This is only called if the validator fails.
+                self._io.write(fail_message)
+
     def _fill_book_fields(self, reading_tip):
-        author = self._io.read(self.ADD_AUTHOR)
-        isbn = self._io.read(self.ADD_ISBN)
-        reading_tip["author"] = author
-        reading_tip["isbn"] = isbn
-    
+        self._prompt_user(reading_tip, "author",
+                          self.ADD_AUTHOR, self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "isbn", self.ADD_ISBN,
+                          self.FIELD_EMPTY_TEXT)
+
     def _fill_blogpost_fields(self, reading_tip):
-        url = self._io.read(self.ADD_URL)
-        author = self._io.read(self.ADD_AUTHOR)
-        reading_tip["url"] = url
-        reading_tip["author"] = author
-    
+        self._prompt_user(reading_tip, "url", self.ADD_URL,
+                          self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "author",
+                          self.ADD_AUTHOR, self.FIELD_EMPTY_TEXT)
+
     def _fill_video_fields(self, reading_tip):
-        url = self._io.read(self.ADD_URL)
-        reading_tip["url"] = url
+        self._prompt_user(reading_tip, "url", self.ADD_URL,
+                          self.FIELD_EMPTY_TEXT)
 
     def _fill_podcast_fields(self, reading_tip):
-        url = self._io.read(self.ADD_URL)
-        author = self._io.read(self.ADD_AUTHOR)
-        name = self._io.read(self.ADD_NAME)
-        reading_tip["url"] = url
-        reading_tip["author"] = author
-        reading_tip["name"] = name
+        self._prompt_user(reading_tip, "url", self.ADD_URL,
+                          self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "author",
+                          self.ADD_AUTHOR, self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "name", self.ADD_NAME,
+                          self.FIELD_EMPTY_TEXT)
 
     def execute(self):
         tips_type = self._select_tips_type()
-        input_title = self._io.read(self.ADD_NEW_TIP_TEXT)
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
-        reading_tip["title"] = input_title
 
+        self._prompt_user(reading_tip, "title", self.ADD_NEW_TIP_TEXT, self.FIELD_EMPTY_TEXT)
         self.handle_tip_input[tips_type](reading_tip)
-        
-        if reading_tip["title"]:
-            if self._reading_tip_service.store_reading_tip(reading_tip):
-                self._io.write(self.ADDITION_SUCCESS_TEXT)
-                return
+
+        if self._reading_tip_service.store_reading_tip(reading_tip):
+            self._io.write(self.ADDITION_SUCCESS_TEXT)
+            return
         self._io.write(self.ADDITION_FAIL_TEXT)
-       
+
     def _select_tips_type(self):
         self._io.write(self.TIPS_TYPES_TEXT)
         while True:
@@ -112,7 +121,6 @@ class AddNewTip(Command):
             return 0 < int(input) <= 5
         except ValueError:
             return False
-
 
 
 def create_main_menu_command_factory(io, reading_tip_service):
