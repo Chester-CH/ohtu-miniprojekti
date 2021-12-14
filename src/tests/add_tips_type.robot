@@ -1,21 +1,30 @@
 *** Settings ***
 Resource  resource.robot
 
+*** Keywords ***
+Go To Main Menu From Book Tip Writer Selection
+    Input Command  Montgomery LM
+    Input Command  ${EMPTY}
+    Input Command  ${EMPTY}
+    Input Command  ${EMPTY}
+
 *** Test Cases ***
-Tip With Right Name And Type Is Saved:
-    Add New Tip From Main Menu
+Tip With Right Name And Type Is Saved
+    Select Add New Tip From Main Menu
     Select Tip Type Book
     Input Title  Runotyttö etsii tähteään
-    Input Stop And Run Application
+    Go To Main Menu From Book Tip Writer Selection
+    Select Quit Program From Main Menu
+    Run Application
     Check Tips Title And Type Match  Runotyttö etsii tähteään  book
 
 Tips Type Is Shown When Browsing Tips
-    Add New Tip From Main Menu
+    Select Add New Tip From Main Menu
     Select Tip Type Book
     Input Title  Marcovaldo
+    Go To Main Menu From Book Tip Writer Selection
     Browse Tips From Main Menu
     Quit Browsing Tips
-    Input Stop And Run Application
+    Select Quit Program From Main Menu
+    Run Application
     Output Should Contain  1: Marcovaldo, kirja
-
-*** Keywords ***
