@@ -1,6 +1,18 @@
 *** Settings ***
 Resource  resource.robot
 
+<<<<<<< HEAD
+=======
+*** Keywords ***
+Go To Main Menu From Book Tip Writer Selection
+    Input Command  Montgomery LM
+    Input Command  ${EMPTY}
+    Input Command  ${EMPTY}
+    Input Command  ${EMPTY}
+
+Browse Output Contains The Created Book Tip
+    Output Should Contain  1: Marcovaldo, kirja
+
 *** Test Cases ***
 Tip With Right Name And Type Book Is Saved
     Select Add New Tip From Main Menu
@@ -20,7 +32,7 @@ Tips Type Book Is Shown When Browsing Tips
     Quit Browsing Tips
     Select Quit Program From Main Menu
     Run Application
-    Output Should Contain  1: Marcovaldo, kirja
+    Browse Output Contains The Created Book Tip
 
 Tip With Right Name And Type Video Is Saved
     Select Add New Tip From Main Menu
@@ -104,3 +116,4 @@ Go To Main Menu From Podcast Tip Url Selection
     Input Command  Datawave
     Input Command  Vortex Traks Podcast
     Input Command  ${EMPTY}
+    Browse Output Contains The Created Book Tip
