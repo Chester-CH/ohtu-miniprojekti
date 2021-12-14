@@ -1,7 +1,7 @@
 def _default_validator(value):
     """A default validator, return False when value is None or an empty string. """
-    if not value:
-        return False
+    if not value or not str(value).strip():
+            return False
     return True
 
 def all_validator(value):

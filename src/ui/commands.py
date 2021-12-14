@@ -67,7 +67,7 @@ class AddNewTip(Command):
         if not fail_message:
             fail_message = self.FIELD_EMPTY_TEXT
         while True:
-            value = self._io.read(prompt_message)
+            value = self._io.read(prompt_message).strip()
             if reading_tip.try_set(content_type, value):
                 return
             else:

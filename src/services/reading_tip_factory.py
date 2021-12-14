@@ -8,7 +8,7 @@ def _unvalidated_content(value=None):
 
 
 def _create_new_book_tip():
-    contents = {"author": Content(), "isbn": _unvalidated_content()}
+    contents = {"author": _unvalidated_content(), "isbn": _unvalidated_content()}
     tip = ReadingTip(TipTypes.BOOK, contents)
     return tip
 
