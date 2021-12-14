@@ -6,6 +6,7 @@ def _default_validator(value):
 
 def all_validator(value):
     """No validation for value insertion. Returns True always. """
+    # pylint: disable=unused-argument
     return True
 
 class Content:
