@@ -1,10 +1,14 @@
 from entities.tip_types import TipTypes
 from entities.reading_tip import ReadingTip
-from entities.content import Content
+from entities.content import Content, all_validator
+
+
+def _unvalidated_content(value=None):
+    return Content(value=value, validator=all_validator)
 
 
 def _create_new_book_tip():
-    contents = {"author": Content(), "isbn": Content()}
+    contents = {"author": Content(), "isbn": _unvalidated_content()}
     tip = ReadingTip(TipTypes.BOOK, contents)
     return tip
 
@@ -23,7 +27,7 @@ def _create_new_blogpost_tip():
 
 def _create_new_podcast_tip():
     contents = {"url": Content(), "author": Content(),
-                "name": Content()}
+                "name": _unvalidated_content()}
     tip = ReadingTip(TipTypes.PODCAST, contents)
     return tip
 

@@ -1,4 +1,4 @@
-from entities.content import Content
+from entities.content import Content, all_validator
 
 
 class ReadingTip:
@@ -6,22 +6,22 @@ class ReadingTip:
     """
 
     def __init__(self, tip_type, contents):
-        """ Initializes an empty base reading tip. """
+        """ Initializes an empty reading tip. """
         contents["title"] = Content()
         contents["tip_id"] = Content()
         contents["tip_type"] = Content(value=tip_type)
-        contents["description"] = Content()
+        contents["description"] = Content(validator=all_validator)
         self._contents = contents
 
     def __setitem__(self, content_type, value):
         if not content_type in self._contents:
-            raise ValueError("No such content type.")
+            raise KeyError("No such content type.")
         self._contents[content_type].value = value
 
     def __getitem__(self, content_type):
-        if content_type in self._contents:
-            return self._contents[content_type].value
-        raise ValueError("No such content type.")
+        if not content_type in self._contents:
+            raise KeyError("No such content type.")
+        return self._contents[content_type].value
 
     def set_values_from_dict(self, contents):
         """ Sets corresponding object variables to values indicated
@@ -41,3 +41,7 @@ class ReadingTip:
         for content_type, content in self._contents.items():
             contents[content_type] = content.value
         return contents
+
+    def try_set(self, content_type, value):
+        if self[content_type].validator(value):
+            self[content_type] = value
