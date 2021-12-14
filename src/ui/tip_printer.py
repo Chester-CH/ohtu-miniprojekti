@@ -1,44 +1,38 @@
 from entities.tip_types import TipTypes
 
 
-def _value_string(value):
-    if value:
-        return str(value)
-    return ""
-
-
-def _add_description(string_description, tip):
-    if tip['description']:
-        string_description += f"\nKuvaus: {_value_string(tip['description'])}"
-    return string_description
+def _get_field_description(user_text, content_type, tip):
+    if tip[content_type]:
+        return user_text + str(tip[content_type])
+    return False
 
 
 def _get_book_description(book_tip):
-    string_description = "\n" + \
-        f"Kirjailija: {_value_string(book_tip['author'])}, " + \
-        f"ISBN: {_value_string(book_tip['isbn'])}"
-    return _add_description(string_description, book_tip)
+    descriptions = [_get_field_description("Kirjailija: ", "author", book_tip),
+                    _get_field_description("ISBN: ", "isbn", book_tip),
+                    _get_field_description("Kuvaus: ", "description", book_tip)]
+    return "\n".join(filter(lambda s: s, descriptions))
 
 
 def _get_blogpost_description(blog_tip):
-    string_description = "\n" + \
-        f"Tekijä: {_value_string(blog_tip['author'])}, " + \
-        f"URL: {_value_string(blog_tip['url'])}"
-    return _add_description(string_description, blog_tip)
+    descriptions = [_get_field_description("Tekijä: ", "author", blog_tip),
+                    _get_field_description("URL: ", "url", blog_tip),
+                    _get_field_description("Kuvaus: ", "description", blog_tip)]
+    return "\n".join(filter(lambda s: s, descriptions))
 
 
 def _get_video_description(video_tip):
-    string_description = "\n" + \
-        f"URL: {_value_string(video_tip['url'])}"
-    return _add_description(string_description, video_tip)
+    descriptions = [_get_field_description("URL: ", "url", video_tip),
+                    _get_field_description("Kuvaus: ", "description", video_tip)]
+    return "\n".join(filter(lambda s: s, descriptions))
 
 
 def _get_podcast_description(podcast_tip):
-    string_description = "\n" + \
-        f"Podcastin nimi: {_value_string(podcast_tip['name'])}, " + \
-        f"Tekijä: {_value_string(podcast_tip['author'])}\n" + \
-        f"URL: {_value_string(podcast_tip['url'])}"
-    return _add_description(string_description, podcast_tip)
+    descriptions = [_get_field_description("Nimi: ", "name", podcast_tip),
+                    _get_field_description("Tekijä: ", "author", podcast_tip),
+                    _get_field_description("URL: ", "url", podcast_tip),
+                    _get_field_description("Kuvaus: ", "description", podcast_tip)]
+    return "\n".join(filter(lambda s: s, descriptions))
 
 
 class TipPrinter:
@@ -60,6 +54,7 @@ class TipPrinter:
     @staticmethod
     def get_description(tip):
         """ Returns a string description of the contents of this tip. """
-        description = f"{tip['title']}, {TipPrinter.TIP_TYPE_IN_FINNISH[tip['tip_type']]}" + \
-            TipPrinter.TIP_TYPE_PRINTERS[tip['tip_type']](tip) + "\n"
-        return description
+        str_representation = TipPrinter.TIP_TYPE_PRINTERS[tip['tip_type']](tip)
+        str_representation = f"{tip['title']}, {TipPrinter.TIP_TYPE_IN_FINNISH[tip['tip_type']]}" + \
+            "\n" + str_representation + "\n"
+        return str_representation
