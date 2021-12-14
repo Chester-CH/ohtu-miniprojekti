@@ -52,6 +52,7 @@ class AddNewTip(Command):
     ADD_ISBN = "Syötä ISBN numero: "
     ADD_URL = "Syötä verkko-osoite: "
     ADD_NAME = "Syötä nimi: "
+    ADD_DESCRIPTION = "Syötä kuvaus (vapaaehtoinen): "
 
     def __init__(self, io, reading_tip_service):
         super().__init__(io, reading_tip_service)
@@ -99,8 +100,11 @@ class AddNewTip(Command):
         tips_type = self._select_tips_type()
         reading_tip = ReadingTipFactory.get_new_reading_tip(tips_type)
 
-        self._prompt_user(reading_tip, "title", self.ADD_NEW_TIP_TEXT, self.FIELD_EMPTY_TEXT)
+        self._prompt_user(reading_tip, "title",
+                          self.ADD_NEW_TIP_TEXT, self.FIELD_EMPTY_TEXT)
         self.handle_tip_input[tips_type](reading_tip)
+        self._prompt_user(reading_tip, "description",
+                          self.ADD_DESCRIPTION, self.FIELD_EMPTY_TEXT)
 
         if self._reading_tip_service.store_reading_tip(reading_tip):
             self._io.write(self.ADDITION_SUCCESS_TEXT)
