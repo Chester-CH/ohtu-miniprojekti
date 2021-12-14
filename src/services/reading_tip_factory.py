@@ -20,13 +20,13 @@ def _create_new_video_tip():
 
 
 def _create_new_blogpost_tip():
-    contents = {"url": Content(), "author": Content()}
+    contents = {"url": Content(), "author": _unvalidated_content()}
     tip = ReadingTip(TipTypes.BLOGPOST, contents)
     return tip
 
 
 def _create_new_podcast_tip():
-    contents = {"url": Content(), "author": Content(),
+    contents = {"url": Content(), "author": _unvalidated_content(),
                 "name": _unvalidated_content()}
     tip = ReadingTip(TipTypes.PODCAST, contents)
     return tip
