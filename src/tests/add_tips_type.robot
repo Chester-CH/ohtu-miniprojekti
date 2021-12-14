@@ -1,18 +1,6 @@
 *** Settings ***
 Resource  resource.robot
 
-<<<<<<< HEAD
-=======
-*** Keywords ***
-Go To Main Menu From Book Tip Writer Selection
-    Input Command  Montgomery LM
-    Input Command  ${EMPTY}
-    Input Command  ${EMPTY}
-    Input Command  ${EMPTY}
-
-Browse Output Contains The Created Book Tip
-    Output Should Contain  1: Marcovaldo, kirja
-
 *** Test Cases ***
 Tip With Right Name And Type Book Is Saved
     Select Add New Tip From Main Menu
@@ -52,7 +40,7 @@ Tips Video Type Is Shown When Browsing Tips
     Quit Browsing Tips
     Select Quit Program From Main Menu
     Run Application
-    Output Should Contain  1: Darude - Sandstorm, video
+    Browse Output Contains The Created Video Tip
 
 Tip With Right Name And Type Blogpost Is Saved
     Select Add New Tip From Main Menu
@@ -72,6 +60,7 @@ Tips Blogpost Type Is Shown When Browsing Tips
     Quit Browsing Tips
     Select Quit Program From Main Menu
     Run Application
+    Browse Output Contains The Created Blogpost Tip
     Output Should Contain  1: Omikron jäi haaviin nopeasti, blogiposti
 
 Tip With Right Name And Type Podcast Is Saved
@@ -92,7 +81,7 @@ Tips Podcast Type Is Shown When Browsing Tips
     Quit Browsing Tips
     Select Quit Program From Main Menu
     Run Application
-    Output Should Contain  1: Vortex Traks Podcast 07 - Datawave, podcast
+    Browse Output Contains The Created Podcast Tip
 
 
 *** Keywords ***
@@ -116,4 +105,15 @@ Go To Main Menu From Podcast Tip Url Selection
     Input Command  Datawave
     Input Command  Vortex Traks Podcast
     Input Command  ${EMPTY}
-    Browse Output Contains The Created Book Tip
+
+Browse Output Contains The Created Book Tip
+    Output Should Contain  1: Marcovaldo, kirja
+
+Browse Output Contains The Created Video Tip
+    Output Should Contain  1: Darude - Sandstorm, video
+
+Browse Output Contains The Created Blogpost Tip
+    Output Should Contain  1: Omikron jäi haaviin nopeasti, blogiposti
+
+Browse Output Contains The Created Podcast Tip
+    Output Should Contain  1: Vortex Traks Podcast 07 - Datawave, podcast
