@@ -4,6 +4,8 @@ from ui.commands import QuitSignal, create_main_menu_command_factory
 
 
 class UI:
+    """ The main UI class, holds the start-method. """
+
     GREET_TEXT = "Hei, tervetuloa Lukuvinkki sovellukseen"
     MENU_TEXT = "\nAnna komento:\n1: lisää lukuvinkki\n2: selaa lukuvinkkejä\n0: lopeta"
     MENU_INPUT_TEXT = "Syötä toiminto: "
@@ -15,6 +17,7 @@ class UI:
             io, reading_tip_service)
 
     def start(self):
+        """ Starts running the UI-loop. """
         self._io.write(self.GREET_TEXT)
 
         try:

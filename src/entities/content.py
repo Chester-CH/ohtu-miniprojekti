@@ -1,16 +1,19 @@
 def _default_validator(value):
     """A default validator, return False when value is None or an empty string. """
     if not value or not str(value).strip():
-            return False
+        return False
     return True
+
 
 def all_validator(value):
     """No validation for value insertion. Returns True always. """
     # pylint: disable=unused-argument
     return True
 
+
 class Content:
     """A container class for all content types."""
+
     def __init__(self, value=None, validator=_default_validator):
         self.validator = validator
         self._value = value

@@ -7,11 +7,12 @@ class UnknownCommand:
         self._io = io
 
     def execute(self):
+        """ Called when the user gives an unknown command. """
         self._io.write(self.UNKNOWN_COMMAND_TEXT)
 
 
 class CommandFactory:
-    """ A handling class for all the user commands recognized by the program. 
+    """ A handling class for all the user commands recognized by the program.
     """
 
     def __init__(self, io, reading_tip_service, commands):

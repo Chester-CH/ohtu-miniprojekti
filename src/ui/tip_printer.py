@@ -55,6 +55,7 @@ class TipPrinter:
     def get_description(tip):
         """ Returns a string description of the contents of this tip. """
         str_representation = TipPrinter.TIP_TYPE_PRINTERS[tip['tip_type']](tip)
-        str_representation = f"{tip['title']}, {TipPrinter.TIP_TYPE_IN_FINNISH[tip['tip_type']]}" + \
+        str_representation = f"{tip['title']}," + \
+            f" {TipPrinter.TIP_TYPE_IN_FINNISH[tip['tip_type']]}" + \
             "\n" + str_representation + "\n"
         return str_representation

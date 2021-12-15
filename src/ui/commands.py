@@ -1,9 +1,10 @@
+# pylint: disable=unused-import
+# These are also used from the robot files.
 from ui.base_command import Command, QuitSignal
 from ui.browse_commands import BrowseTips, RemoveTip, BrowseMenuCommands
 from ui.command_factory import CommandFactory, UnknownCommand
 from services.reading_tip_factory import ReadingTipFactory
 from entities.tip_types import TipTypes
-
 
 class MainMenuCommands():
     """ Defines all valid main menu command inputs.
@@ -11,15 +12,6 @@ class MainMenuCommands():
     QUIT_PROGRAM = "0"
     ADD_NEW_TIP = "1"
     BROWSE_TIPS = "2"
-
-
-class SelectTypeMenuCommands():
-    TYPE_MENU_COMMANDS = {
-        "1": TipTypes.BOOK,
-        "2": TipTypes.VIDEO,
-        "3": TipTypes.BLOGPOST,
-        "4": TipTypes.PODCAST
-    }
 
 
 class QuitProgram(Command):
@@ -53,6 +45,12 @@ class AddNewTip(Command):
     ADD_URL = "Syötä verkko-osoite: "
     ADD_NAME = "Syötä nimi: "
     ADD_DESCRIPTION = "Syötä kuvaus (vapaaehtoinen): "
+    TYPE_MENU_COMMANDS = {
+        "1": TipTypes.BOOK,
+        "2": TipTypes.VIDEO,
+        "3": TipTypes.BLOGPOST,
+        "4": TipTypes.PODCAST
+    }
 
     def __init__(self, io, reading_tip_service):
         super().__init__(io, reading_tip_service)
@@ -70,9 +68,7 @@ class AddNewTip(Command):
             value = self._io.read(prompt_message).strip()
             if reading_tip.try_set(content_type, value):
                 return
-            else:
-                # This is only called if the validator fails.
-                self._io.write(fail_message)
+            self._io.write(fail_message)
 
     def _fill_book_fields(self, reading_tip):
         self._prompt_user(reading_tip, "author", self.ADD_AUTHOR)
@@ -91,6 +87,7 @@ class AddNewTip(Command):
         self._prompt_user(reading_tip, "name", self.ADD_NAME)
 
     def execute(self):
+        """ Handles showing the add new tip menu to the user. """
         tips_type = self._select_tips_type()
         if not tips_type:
             return
@@ -116,16 +113,20 @@ class AddNewTip(Command):
             if type_input == "":
                 return None
             self._io.write(self.BAD_TYPE_NUMBER)
-        return SelectTypeMenuCommands.TYPE_MENU_COMMANDS[type_input]
+        return self.TYPE_MENU_COMMANDS[type_input]
 
-    def _validate_type_input(self, input):
+    def _validate_type_input(self, type_input):
+        # pylint: disable=no-self-use
         try:
-            return 0 < int(input) <= 5
+            return 0 < int(type_input) <= 5
         except ValueError:
             return False
 
 
 def create_main_menu_command_factory(io, reading_tip_service):
+    """ Creates a new main menu command factory used by the main ui-loop. """
+    # Nothing wrong with 'io'.
+    # pylint: disable=invalid-name
     main_menu_commands = {
         MainMenuCommands.QUIT_PROGRAM: QuitProgram(io, reading_tip_service),
         MainMenuCommands.ADD_NEW_TIP: AddNewTip(io, reading_tip_service),

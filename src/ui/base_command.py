@@ -1,4 +1,6 @@
 class QuitSignal(Exception):
+    """ Used to get out of command loops with a quit command. """
+    # pylint: disable=unnecessary-pass
     pass
 
 class Command():

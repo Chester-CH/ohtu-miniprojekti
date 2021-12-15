@@ -1,9 +1,9 @@
 from ui.base_command import Command, QuitSignal
 from ui.command_factory import CommandFactory
-from entities.tip_types import TipTypes
 from ui.tip_printer import TipPrinter
 
 class BrowseMenuCommands:
+    """ Menu commands for browsing tips. """
     YES = "k"
     NO = "e"
     SHOW_MORE_TIPS = "t"
@@ -21,6 +21,10 @@ class BrowseTips(Command):
     END_BROWSING_TEXT = "\nLukuvinkkilistan selaaminen lopetettu."
     NO_TIPS_FOUND_TEXT = "Lukuvinkkejä ei löytynyt."
     TIPS_PER_PAGE = 10
+
+    def __init__(self, io, reading_tip_service):
+        super().__init__(io, reading_tip_service)
+        self._command_factory = None
 
     def _init_commands(self, tip_list):
         menu_commands = {
@@ -44,6 +48,7 @@ class BrowseTips(Command):
             return str(quit_signal)
 
     def execute(self):
+        """ Shows the browse tips menu and handles all UI-related tasks. """
         tip_list = self._reading_tip_service.get_all_tips()
         self._init_commands(tip_list)
         self._io.write(self.GREET_TEXT)
@@ -86,6 +91,7 @@ class RemoveTip(Command):
         self._tip_list = tip_list
 
     def execute(self):
+        """ Handles the remove tip part of the browse tips menu. """
         try:
             removal_number = int(self._io.read(self.CHOOSE_TIP_FOR_REMOVAL))
         except ValueError:
@@ -106,10 +112,16 @@ class RemoveTip(Command):
 
 
 class ShowMoreTips(Command):
+    """ Used when the user wants to be shown more tips in the browse menu. """
     def execute(self):
+        """ Raises a quit signal. """
+        # pylint: disable=no-self-use
         raise QuitSignal(BrowseMenuCommands.SHOW_MORE_TIPS)
 
 
 class StopBrowsing(Command):
+    """ Used when the user wants to quit browsing tips. """
     def execute(self):
+        """ Raises a quit signal. """
+        # pylint: disable=no-self-use
         raise QuitSignal(BrowseMenuCommands.STOP_BROWSING)
