@@ -48,4 +48,6 @@ Käyttäjä voi poistaa vinkin
 
 ![Käyttäjä voi merkata lukuvinkin tyypin: kirja, video, blogpost, podcast](https://github.com/Chester-CH/ohtu-miniprojekti/blob/main/src/tests/add_tips_type.robot)
 
+![Käyttäjä voi lisätä eri tietoja vinkkityypistä riippuen](https://github.com/Chester-CH/ohtu-miniprojekti/blob/main/src/tests/add_details_to_tips.robot)
+
 	
