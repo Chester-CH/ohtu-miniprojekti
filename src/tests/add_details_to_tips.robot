@@ -20,7 +20,96 @@ Browse Output Contains The Created Blogpost Tip
 Browse Output Contains The Created Podcast Tip
     Output Should Contain  1: All Female Panel, podcast\nNimi: Jakso 1: Jotain ämmiä äänessä\nTekijä: Elina Ylä-Mononen\nURL: https://areena.yle.fi/audio/1-50123230\nKuvaus: All Female Panel on feministisen huumorin sysimusta pesäke
 
+Output Contains Warning Text
+    ${tips menu} =  Get Ui Message  AddNewTip  FIELD_EMPTY_TEXT
+    Output Should Contain  ${tips menu}
+
 *** Test Cases ***
+Book Name Cannot Be Empty
+    Select Add New Tip From Main Menu
+    Select Tip Type Book
+    Input Book Name  ${EMPTY}
+    Input Book Name  Dune
+    Input Writer  Frank Herbert
+    Input ISBN  0441172717
+    Input Description  A scifi book
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Warning Text
+
+Video Name Cannot Be Empty
+    Select Add New Tip From Main Menu
+    Select Tip Type Book
+    Input Title  ${EMPTY}
+    Input Title  Helsingin yliopiston Ohjelmistotuotanto, vierailuluento: Digital Product Design (Nitor)
+    Input URL  https://www.youtube.com/watch?v=dhDusAPpjos&t=816s&ab_channel=moocfi
+    Input Description  Niko Laitinen Nitor:sta pitää vierailuluennon Helsingin yliopiston Ohjelmistotuotanto kurssilla 
+    Browse Tips From Main Menu
+    Quit Browsing Tips
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Warning Text
+
+Blogpost Title Cannot Be Empty
+    Select Add New Tip From Main Menu
+    Select Tip Type Blogpost
+    Input Title  ${EMPTY}
+    Input Title  A quick maintenance break on September the 9th from 3 pm to 5 pm
+    Input URL  https://blogs.helsinki.fi/a-quick-maintenance-break-on-september-the-9th-from-3-pm-to-5-pm/
+    Input Writer  Petteri Hemmilä
+    Input Description  Uni Helsinki blogging platform 
+    Browse Tips From Main Menu
+    Quit Browsing Tips
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Warning Text
+
+Blogpost Link Cannot Be Empty
+    Select Add New Tip From Main Menu
+    Select Tip Type Blogpost
+    Input Title  A quick maintenance break on September the 9th from 3 pm to 5 pm
+    Input URL  ${EMPTY}
+    Input URL  https://blogs.helsinki.fi/a-quick-maintenance-break-on-september-the-9th-from-3-pm-to-5-pm/
+    Input Writer  Petteri Hemmilä
+    Input Description  Uni Helsinki blogging platform 
+    Browse Tips From Main Menu
+    Quit Browsing Tips
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Warning Text
+
+
+PodCast Title Cannot Be Empty 
+    Select Add New Tip From Main Menu
+    Select Tip Type Podcast
+    Input Title  ${EMPTY}
+    Input Title  All Female Panel
+    Input URL  https://areena.yle.fi/audio/1-50123230
+    Input Writer  Elina Ylä-Mononen
+    Input Episode Name  Jakso 1: Jotain ämmiä äänessä
+    Input Description  All Female Panel on feministisen huumorin sysimusta pesäke 
+    Browse Tips From Main Menu
+    Quit Browsing Tips
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Warning Text 
+
+PodCast Link Cannot Be Empty 
+    Select Add New Tip From Main Menu
+    Select Tip Type Podcast
+    Input Title  All Female Panel
+    Input URL  ${EMPTY}
+    Input URL  https://areena.yle.fi/audio/1-50123230
+    Input Writer  Elina Ylä-Mononen
+    Input Episode Name  Jakso 1: Jotain ämmiä äänessä
+    Input Description  All Female Panel on feministisen huumorin sysimusta pesäke 
+    Browse Tips From Main Menu
+    Quit Browsing Tips
+    Select Quit Program From Main Menu
+    Run Application
+    Output Contains Warning Text    
+
+
 Book Tip Is Saved With The Right Details
     Select Add New Tip From Main Menu
     Select Tip Type Book
@@ -33,6 +122,8 @@ Book Tip Is Saved With The Right Details
     Select Quit Program From Main Menu
     Run Application
     Browse Output Contains The Created Book Tip
+
+
 
 Video Tip Is Saved With The Right Details
     Select Add New Tip From Main Menu
