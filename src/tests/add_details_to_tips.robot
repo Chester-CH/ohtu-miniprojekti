@@ -24,11 +24,20 @@ Output Contains Warning Text
     ${tips menu} =  Get Ui Message  AddNewTip  FIELD_EMPTY_TEXT
     Output Should Contain  ${tips menu}
 
+Input Empty Book Name
+    Input Book Name  ${EMPTY}
+
+Input Empty Title
+    Input Title  ${EMPTY}
+
+Input Empty URL
+    Input URL  ${EMPTY}
+
 *** Test Cases ***
 Book Name Cannot Be Empty
     Select Add New Tip From Main Menu
     Select Tip Type Book
-    Input Book Name  ${EMPTY}
+    Input Empty Book Name
     Input Book Name  Dune
     Input Writer  Frank Herbert
     Input ISBN  0441172717
@@ -40,7 +49,7 @@ Book Name Cannot Be Empty
 Video Name Cannot Be Empty
     Select Add New Tip From Main Menu
     Select Tip Type Book
-    Input Title  ${EMPTY}
+    Input Empty Title
     Input Title  Helsingin yliopiston Ohjelmistotuotanto, vierailuluento: Digital Product Design (Nitor)
     Input URL  https://www.youtube.com/watch?v=dhDusAPpjos&t=816s&ab_channel=moocfi
     Input Description  Niko Laitinen Nitor:sta pitää vierailuluennon Helsingin yliopiston Ohjelmistotuotanto kurssilla 
@@ -53,7 +62,7 @@ Video Name Cannot Be Empty
 Blogpost Title Cannot Be Empty
     Select Add New Tip From Main Menu
     Select Tip Type Blogpost
-    Input Title  ${EMPTY}
+    Input Empty Title
     Input Title  A quick maintenance break on September the 9th from 3 pm to 5 pm
     Input URL  https://blogs.helsinki.fi/a-quick-maintenance-break-on-september-the-9th-from-3-pm-to-5-pm/
     Input Writer  Petteri Hemmilä
@@ -68,7 +77,7 @@ Blogpost Link Cannot Be Empty
     Select Add New Tip From Main Menu
     Select Tip Type Blogpost
     Input Title  A quick maintenance break on September the 9th from 3 pm to 5 pm
-    Input URL  ${EMPTY}
+    Input Empty URL
     Input URL  https://blogs.helsinki.fi/a-quick-maintenance-break-on-september-the-9th-from-3-pm-to-5-pm/
     Input Writer  Petteri Hemmilä
     Input Description  Uni Helsinki blogging platform 
@@ -82,7 +91,7 @@ Blogpost Link Cannot Be Empty
 PodCast Title Cannot Be Empty 
     Select Add New Tip From Main Menu
     Select Tip Type Podcast
-    Input Title  ${EMPTY}
+    Input Empty Title
     Input Title  All Female Panel
     Input URL  https://areena.yle.fi/audio/1-50123230
     Input Writer  Elina Ylä-Mononen
@@ -98,7 +107,7 @@ PodCast Link Cannot Be Empty
     Select Add New Tip From Main Menu
     Select Tip Type Podcast
     Input Title  All Female Panel
-    Input URL  ${EMPTY}
+    Input Empty URL
     Input URL  https://areena.yle.fi/audio/1-50123230
     Input Writer  Elina Ylä-Mononen
     Input Episode Name  Jakso 1: Jotain ämmiä äänessä
