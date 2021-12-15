@@ -36,5 +36,6 @@ kautta. Tietokannan käsittelyä tehdään vain repositories-luokkien sisällä.
 Backlog: https://helsinkifi-my.sharepoint.com/:x:/g/personal/zhishang_ad_helsinki_fi/ESzC-Jm3OalOiB9j0D8Jk3gBnYgjiXha1GqmPX1QvpkNvQ?e=tM95Tj
 
 ## Julkaisut
-![1st release](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v1.0.0)
+![Sprint 3 release](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v.1.1.0)
+![1st release (sprint 2)](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v1.0.0)
 
