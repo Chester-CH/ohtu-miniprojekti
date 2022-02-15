@@ -43,3 +43,7 @@ Backlog: https://helsinkifi-my.sharepoint.com/:x:/g/personal/zhishang_ad_helsink
 - ![Sprint 3 release](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v.1.1.0)
 - ![1st release (sprint 2)](https://github.com/Chester-CH/ohtu-miniprojekti/releases/tag/v1.0.0)
 
+
+
+
+x
